@@ -305,6 +305,12 @@
 			"MU",
 			"EWIEGA46WW/moc_part.cpp",
 			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h",
+			"MU",
+			"EWIEGA46WW/moc_warehousemanager.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -383,7 +389,12 @@
 			"MU",
 			null
 		],
-		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ]
+		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp",
+			"MU",
+			null
+		]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
