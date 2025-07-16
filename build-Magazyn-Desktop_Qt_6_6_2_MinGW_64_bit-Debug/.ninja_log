@@ -1,0 +1,21 @@
+# ninja log v5
+21	275	7743642212919492	Magazyn_autogen/timestamp	cb068ac0198e73f2
+21	275	7743642212919492	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+21	275	7743642212919492	Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+21	275	7743642212919492	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/timestamp	cb068ac0198e73f2
+290	2966	7743642239798077	CMakeFiles/Magazyn.dir/mainwindow.cpp.obj	1e366058e92cf251
+676	3140	7743641458078741	CMakeFiles/Magazyn.dir/Magazyn_autogen/mocs_compilation.cpp.obj	5fcaf6ec86ca8cb3
+674	3133	7743641458387950	CMakeFiles/Magazyn.dir/main.cpp.obj	70767311062d872c
+2967	3441	7743642244329424	Magazyn.exe	eb9cc31964474304
+24	242	7743667006496229	Magazyn_autogen/timestamp	cb068ac0198e73f2
+24	242	7743667006496229	Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+24	242	7743667006496229	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/timestamp	cb068ac0198e73f2
+24	242	7743667006496229	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+255	2908	7743667033214591	CMakeFiles/Magazyn.dir/mainwindow.cpp.obj	1e366058e92cf251
+78	239	7743667277435982	Magazyn_autogen/timestamp	cb068ac0198e73f2
+78	239	7743667277435982	Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+78	239	7743667277435982	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/timestamp	cb068ac0198e73f2
+78	239	7743667277435982	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/mocs_compilation.cpp	cb068ac0198e73f2
+256	1477	7743667289782866	CMakeFiles/Magazyn.dir/part.cpp.obj	b361890df3185a56
+253	2788	7743667303057369	CMakeFiles/Magazyn.dir/mainwindow.cpp.obj	1e366058e92cf251
+2789	3117	7743667306029488	Magazyn.exe	b4e06ac629daaa56
