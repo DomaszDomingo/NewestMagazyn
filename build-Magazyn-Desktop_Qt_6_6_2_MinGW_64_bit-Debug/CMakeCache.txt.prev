@@ -18,6 +18,7 @@
 CMAKE_ADDR2LINE:FILEPATH=C:/Qt/Tools/mingw1120_64/bin/addr2line.exe
 
 //Path to a program.
+CMAKE_AR:FILEPATH=C:/Qt/Tools/mingw1120_64/bin/ar.exe
 
 //No help, variable specified on the command line.
 CMAKE_BUILD_TYPE:STRING=Debug
