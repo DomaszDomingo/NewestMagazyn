@@ -53,7 +53,6 @@ QVariant WarehouseManager::headerData(int section, Qt::Orientation orientation, 
     if (role != Qt::DisplayRole || orientation != Qt::Horizontal){
         return QVariant();
     }
-
     switch (section){
     case Name:
         return "Nazwa części";
