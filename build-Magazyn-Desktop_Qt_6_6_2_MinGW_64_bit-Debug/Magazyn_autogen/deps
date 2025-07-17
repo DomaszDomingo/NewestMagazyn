@@ -1,8 +1,12 @@
 Magazyn_autogen/timestamp: \
+	C:/Qt/6.6.2/mingw_64/include/QtCore/QAbstractTableModel \
+	C:/Qt/6.6.2/mingw_64/include/QtCore/QList \
+	C:/Qt/6.6.2/mingw_64/include/QtCore/QString \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/q20functional.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/q20memory.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/q20type_traits.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/q23utility.h \
+	C:/Qt/6.6.2/mingw_64/include/QtCore/qabstractitemmodel.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/qalgorithms.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/qanystringview.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/qarraydata.h \
@@ -554,5 +558,7 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.ui \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

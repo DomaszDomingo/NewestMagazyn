@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include "warehousemanager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    WarehouseManager *m_warehouseManager;
 
 };
 #endif // MAINWINDOW_H

@@ -1,26 +1,33 @@
 #ifndef WAREHOUSEMANAGER_H
 #define WAREHOUSEMANAGER_H
 
-#include <QObject>
+#include <QAbstractTableModel>
 #include <QList>
 #include "part.h"
 
-class WarehouseManager : public QObject
+class WarehouseManager : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+
+    enum Column{
+        Name = 0,
+        CatalogNumber,
+        Quantity,
+        Price,
+        ColumnCount
+    };
+
     explicit WarehouseManager(QObject *parent = nullptr);
-    WarehouseManager(const QList<Part> &parts);
 
     void addPart (const Part &part);
 
-    const QList<Part> &parts() const;
+    int rowCount (const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount (const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    int partCount() const;
 
-signals:
-
-    void modelChanged();
 
 private:
     QList<Part> m_parts;

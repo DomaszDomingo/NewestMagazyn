@@ -29,14 +29,14 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QWidget *widget;
+    QVBoxLayout *verticalLayout_2;
+    QLineEdit *filterLineEdit;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
     QPushButton *addButton;
     QPushButton *editButton;
     QPushButton *pushButton_3;
-    QVBoxLayout *verticalLayout_2;
-    QLineEdit *filterLineEdit;
-    QTableView *materialsTableView;
+    QTableView *partsTableView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -49,10 +49,17 @@ public:
         centralwidget->setObjectName("centralwidget");
         widget = new QWidget(centralwidget);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(130, 60, 348, 226));
-        horizontalLayout = new QHBoxLayout(widget);
+        widget->setGeometry(QRect(131, 20, 348, 226));
+        verticalLayout_2 = new QVBoxLayout(widget);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        filterLineEdit = new QLineEdit(widget);
+        filterLineEdit->setObjectName("filterLineEdit");
+
+        verticalLayout_2->addWidget(filterLineEdit);
+
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
         addButton = new QPushButton(widget);
@@ -73,20 +80,13 @@ public:
 
         horizontalLayout->addLayout(verticalLayout);
 
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName("verticalLayout_2");
-        filterLineEdit = new QLineEdit(widget);
-        filterLineEdit->setObjectName("filterLineEdit");
+        partsTableView = new QTableView(widget);
+        partsTableView->setObjectName("partsTableView");
 
-        verticalLayout_2->addWidget(filterLineEdit);
-
-        materialsTableView = new QTableView(widget);
-        materialsTableView->setObjectName("materialsTableView");
-
-        verticalLayout_2->addWidget(materialsTableView);
+        horizontalLayout->addWidget(partsTableView);
 
 
-        horizontalLayout->addLayout(verticalLayout_2);
+        verticalLayout_2->addLayout(horizontalLayout);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
