@@ -21,5 +21,8 @@ private:
     Ui::MainWindow *ui;
     WarehouseManager *m_warehouseManager;
 
+private slots:
+    void on_addButton_clicked();
+
 };
 #endif // MAINWINDOW_H

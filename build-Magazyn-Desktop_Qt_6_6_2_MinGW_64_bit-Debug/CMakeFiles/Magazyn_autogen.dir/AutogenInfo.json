@@ -295,6 +295,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_addpartdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
@@ -389,6 +395,11 @@
 	"SETTINGS_FILE" : "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/Magazyn_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.cpp",
+			"MU",
+			null
+		],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp",
 			"MU",

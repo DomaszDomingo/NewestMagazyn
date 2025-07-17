@@ -141,7 +141,9 @@ Magazyn_autogen/timestamp: \
 	C:/Qt/6.6.2/mingw_64/include/QtGui/qtransform.h \
 	C:/Qt/6.6.2/mingw_64/include/QtGui/qwindowdefs.h \
 	C:/Qt/6.6.2/mingw_64/include/QtGui/qwindowdefs_win.h \
+	C:/Qt/6.6.2/mingw_64/include/QtWidgets/QDialog \
 	C:/Qt/6.6.2/mingw_64/include/QtWidgets/QMainWindow \
+	C:/Qt/6.6.2/mingw_64/include/QtWidgets/qdialog.h \
 	C:/Qt/6.6.2/mingw_64/include/QtWidgets/qmainwindow.h \
 	C:/Qt/6.6.2/mingw_64/include/QtWidgets/qsizepolicy.h \
 	C:/Qt/6.6.2/mingw_64/include/QtWidgets/qtabwidget.h \
@@ -548,6 +550,8 @@ Magazyn_autogen/timestamp: \
 	C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
 	C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/CMakeLists.txt \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/.qtc/package-manager/auto-setup.cmake \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/3.27.7/CMakeRCCompiler.cmake \
@@ -562,5 +566,6 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.ui \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe
