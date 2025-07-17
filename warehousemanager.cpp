@@ -65,3 +65,4 @@ QVariant WarehouseManager::headerData(int section, Qt::Orientation orientation, 
         return QVariant();
     }
 }
+
