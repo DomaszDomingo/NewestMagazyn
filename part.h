@@ -14,6 +14,9 @@ public:
     int quantity() const;
     double price () const;
     const Location & location () const;
+    int id () const;
+    int setId(int id);
+
 
     void setName (const QString &name);
     void setCatalogNumber (const QString &catalogNumber);
@@ -21,12 +24,14 @@ public:
     void setPrice (double price);
     void setLocation (const Location & location);
 
+
 private:
     QString m_name;
     QString m_catalogNumber;
     int m_quantity;
     double m_price;
     Location m_location;
+    int m_id = -1;              //Domyślna wartość -1 oznacza, że obiekt nie jest w bazie
 };
 
 #endif // PART_H

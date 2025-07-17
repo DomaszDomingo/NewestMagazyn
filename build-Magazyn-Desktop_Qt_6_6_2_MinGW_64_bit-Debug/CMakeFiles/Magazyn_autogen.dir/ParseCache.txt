@@ -354,7 +354,6 @@ C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/databasemanager.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.cpp
  uic:ui_addpartdialog.h
-C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h
  mmc:Q_OBJECT
  mdp:C:/Qt/6.6.2/mingw_64/include/QtCore/QAbstractTableModel
@@ -717,6 +716,7 @@ C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h
+C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h
  mmc:Q_OBJECT
  mdp:C:/Qt/6.6.2/mingw_64/include/QtCore/QAbstractTableModel

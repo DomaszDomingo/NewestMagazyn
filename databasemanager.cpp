@@ -2,12 +2,97 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+#include "part.h"
+#include "location.h"
+
 
 databaseManager::databaseManager() {
 
     openDatabase();
     createTables();
 }
+
+void databaseManager::addPart(const Part &part)
+{
+    QSqlQuery query (m_db);
+    query.prepare("INSERT INTO Parts (name, catalogNumber, quantity, price, locationAisle, locationRack, locationShelf) "
+                  "VALUES (:name, :catalogNumber, :quantity, :price, :locationAisle, :locationRack, :locationShelf)");
+
+    query.bindValue(":name", part.name());
+    query.bindValue(":catalogNumber", part.catalogNumber());
+    query.bindValue(":quantity", part.quantity());
+    query.bindValue(":price",part.price());
+    query.bindValue("locationAisle",part.location().aisle());
+    query.bindValue("locationRack",part.location().rack());
+    query.bindValue(":locationShelf",part.location().shelf());
+
+    if(!query.exec()){
+        qDebug() << "Błąd dodawania części" << query.lastError();
+    }
+}
+
+QList<Part> databaseManager::getAllParts() const
+{
+    QList<Part> parts;
+    QSqlQuery query ("SELECT * FROM Parts", m_db);
+
+    if(!query.exec()){
+        qDebug() << "Błąd pobrania wszystkich części" << query.lastError();
+    }
+
+    while (query.next()){
+        Part part;
+        part.setId(query.value("id").toInt());
+        part.setName(query.value("name").toString());
+        part.setCatalogNumber(query.value("catalogNumber").toString());
+        part.setQuantity(query.value("quantity").toInt());
+        part.setPrice(query.value("price").toDouble());
+
+        Location location (
+            query.value("locationAisle").toString(),
+            query.value("locationRack").toInt(),
+            query.value("locationShelf").toInt());
+
+        part.setLocation(location);
+
+        parts.append(part);
+    }
+    return parts;
+}
+
+void databaseManager::updatePart(const Part &part)
+{
+    QSqlQuery query (m_db);
+    query.prepare("UPDATE Parts SET name = :name, catalogNumber = :catalogNumber, quantity = :quantity, "
+                  "price = :price, locationAisle = :locationAisle, locationRack = :locationRack, "
+                  "locationShelf = :locationShelf WHERE id = :id");
+
+    query.bindValue(":name", part.name());
+    query.bindValue(":catalogNumber", part.catalogNumber());
+    query.bindValue(":quantity", part.quantity());
+    query.bindValue(":price", part.price());
+    query.bindValue(":locationAisle", part.location().aisle());
+    query.bindValue(":locationRack", part.location().rack());
+    query.bindValue(":locationShelf", part.location().shelf());
+    query.bindValue(":id", part.id());
+
+    if (!query.exec()) {
+        qDebug() << "Błąd aktualizacji części:" << query.lastError();
+    }
+}
+
+void databaseManager::deletePart(int id)
+{
+    QSqlQuery query (m_db);
+    query.prepare("DELETE FROM Parts WHERE id = :id");
+    query.bindValue(":id",id);
+
+    if(!query.exec()){
+        qDebug() << "Bład usuwania cześci: " << query.lastError();
+    }
+
+}
+
 
 void databaseManager::openDatabase()
 {

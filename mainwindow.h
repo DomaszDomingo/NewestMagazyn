@@ -18,10 +18,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private:
     Ui::MainWindow *ui;
     WarehouseManager *m_warehouseManager;
     databaseManager m_dbManager;
+
 
 
 private slots:

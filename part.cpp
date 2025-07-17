@@ -39,6 +39,16 @@ const Location &Part::location() const
     return m_location;
 }
 
+int Part::id() const
+{
+    return m_id;
+}
+
+int Part::setId(int id)
+{
+    m_id = id;
+}
+
 void Part::setName(const QString &name)
 {
     m_name = name;
