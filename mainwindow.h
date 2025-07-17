@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "warehousemanager.h"
+#include "databasemanager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,8 @@ public:
 private:
     Ui::MainWindow *ui;
     WarehouseManager *m_warehouseManager;
+    databaseManager m_dbManager;
+
 
 private slots:
     void on_addButton_clicked();
