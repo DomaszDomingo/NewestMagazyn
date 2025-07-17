@@ -25,6 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         part.h part.cpp
         warehousemanager.h warehousemanager.cpp
+        location.h location.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

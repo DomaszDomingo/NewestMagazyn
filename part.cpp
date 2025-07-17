@@ -5,10 +5,11 @@ Part::Part() : m_quantity(0), m_price(0.0)
 
 }
 
-Part::Part(const QString &name, const QString &catalogNumber, int quantity, double price) : m_name(name),
+Part::Part(const QString &name, const QString &catalogNumber, int quantity, double price, const Location & location) : m_name(name),
     m_catalogNumber(catalogNumber),
     m_quantity(quantity),
-    m_price(price)
+    m_price(price),
+    m_location(location)
 {
 
 }
@@ -33,6 +34,11 @@ double Part::price() const
     return m_price;
 }
 
+const Location &Part::location() const
+{
+    return m_location;
+}
+
 void Part::setName(const QString &name)
 {
     m_name = name;
@@ -51,5 +57,10 @@ void Part::setQuantity(int quantity)
 void Part::setPrice(double price)
 {
     m_price = price;
+}
+
+void Part::setLocation(const Location &location)
+{
+    m_location = location;
 }
 

@@ -295,6 +295,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
+			"MU",
+			"EWIEGA46WW/moc_location.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -383,6 +389,11 @@
 	"SETTINGS_FILE" : "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/Magazyn_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp",
+			"MU",
+			null
+		],
 		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/main.cpp", "MU", null ],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.cpp",

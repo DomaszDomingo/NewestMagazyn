@@ -42,6 +42,8 @@ QVariant WarehouseManager::data(const QModelIndex &index, int role) const
         return part.quantity();
     case Price:
         return QString::number(part.price(),'f',2);
+    case ColumnLocation:
+        return part.location().toString();
     default:
         return QVariant();
     }
@@ -61,6 +63,8 @@ QVariant WarehouseManager::headerData(int section, Qt::Orientation orientation, 
         return "Ilośc";
     case Price:
         return "Cena (PLN)";
+    case ColumnLocation:
+        return "Lokalizacja";
     default:
         return QVariant();
     }

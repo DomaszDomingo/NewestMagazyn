@@ -15,7 +15,9 @@ public:
         CatalogNumber,
         Quantity,
         Price,
+        ColumnLocation,
         ColumnCount
+
     };
 
     explicit WarehouseManager(QObject *parent = nullptr);

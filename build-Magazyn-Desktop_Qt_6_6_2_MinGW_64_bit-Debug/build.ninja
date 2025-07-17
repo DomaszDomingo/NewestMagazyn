@@ -89,6 +89,14 @@ build CMakeFiles/Magazyn.dir/warehousemanager.cpp.obj: CXX_COMPILER__Magazyn_uns
   OBJECT_DIR = CMakeFiles\Magazyn.dir
   OBJECT_FILE_DIR = CMakeFiles\Magazyn.dir
 
+build CMakeFiles/Magazyn.dir/location.cpp.obj: CXX_COMPILER__Magazyn_unscanned_Debug C$:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp || cmake_object_order_depends_target_Magazyn
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\Magazyn.dir\location.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/include -isystem C:/Qt/6.6.2/mingw_64/include/QtCore -isystem C:/Qt/6.6.2/mingw_64/include -isystem C:/Qt/6.6.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.6.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.6.2/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\Magazyn.dir
+  OBJECT_FILE_DIR = CMakeFiles\Magazyn.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Magazyn
@@ -97,7 +105,7 @@ build CMakeFiles/Magazyn.dir/warehousemanager.cpp.obj: CXX_COMPILER__Magazyn_uns
 #############################################
 # Link the executable Magazyn.exe
 
-build Magazyn.exe: CXX_EXECUTABLE_LINKER__Magazyn_Debug CMakeFiles/Magazyn.dir/Magazyn_autogen/mocs_compilation.cpp.obj CMakeFiles/Magazyn.dir/main.cpp.obj CMakeFiles/Magazyn.dir/mainwindow.cpp.obj CMakeFiles/Magazyn.dir/part.cpp.obj CMakeFiles/Magazyn.dir/warehousemanager.cpp.obj | C$:/Qt/6.6.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.6.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.6.2/mingw_64/lib/libQt6Core.a C$:/Qt/6.6.2/mingw_64/lib/libQt6EntryPoint.a || Magazyn_autogen Magazyn_autogen_timestamp_deps
+build Magazyn.exe: CXX_EXECUTABLE_LINKER__Magazyn_Debug CMakeFiles/Magazyn.dir/Magazyn_autogen/mocs_compilation.cpp.obj CMakeFiles/Magazyn.dir/main.cpp.obj CMakeFiles/Magazyn.dir/mainwindow.cpp.obj CMakeFiles/Magazyn.dir/part.cpp.obj CMakeFiles/Magazyn.dir/warehousemanager.cpp.obj CMakeFiles/Magazyn.dir/location.cpp.obj | C$:/Qt/6.6.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.6.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.6.2/mingw_64/lib/libQt6Core.a C$:/Qt/6.6.2/mingw_64/lib/libQt6EntryPoint.a || Magazyn_autogen Magazyn_autogen_timestamp_deps
   FLAGS = -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.6.2/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.6.2/mingw_64/lib/libQt6Gui.a  C:/Qt/6.6.2/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.6.2/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
