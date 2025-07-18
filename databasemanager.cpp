@@ -12,6 +12,8 @@ databaseManager::databaseManager() {
     createTables();
 }
 
+
+//Dodawanie części
 void databaseManager::addPart(const Part &part)
 {
     QSqlQuery query (m_db);
@@ -30,7 +32,7 @@ void databaseManager::addPart(const Part &part)
         qDebug() << "Błąd dodawania części" << query.lastError();
     }
 }
-
+//Odczytywanie wszystkich częsci z bazy danych
 QList<Part> databaseManager::getAllParts() const
 {
     QList<Part> parts;
@@ -60,6 +62,8 @@ QList<Part> databaseManager::getAllParts() const
     return parts;
 }
 
+
+//aktualizacja części
 void databaseManager::updatePart(const Part &part)
 {
     QSqlQuery query (m_db);
@@ -81,6 +85,8 @@ void databaseManager::updatePart(const Part &part)
     }
 }
 
+
+//usuwanie częsci
 void databaseManager::deletePart(int id)
 {
     QSqlQuery query (m_db);

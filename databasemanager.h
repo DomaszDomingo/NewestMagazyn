@@ -5,10 +5,10 @@
 #include "part.h"
 #include "location.h"
 
-class databaseManager
+class DatabaseManager
 {
 public:
-    databaseManager();
+    DatabaseManager();
     void addPart(const Part & part);
     QList<Part> getAllParts() const;
     void updatePart (const Part & part);
