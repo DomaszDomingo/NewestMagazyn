@@ -337,6 +337,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_editpartdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
@@ -440,6 +446,11 @@
 		],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/databasemanager.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.cpp",
 			"MU",
 			null
 		],

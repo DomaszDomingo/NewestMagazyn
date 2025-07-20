@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'addpartdialog.ui'
+** Form generated from reading UI file 'editpartdialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_ADDPARTDIALOG_H
-#define UI_ADDPARTDIALOG_H
+#ifndef UI_EDITPARTDIALOG_H
+#define UI_EDITPARTDIALOG_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAbstractButton>
@@ -23,7 +23,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_addPartDialog
+class Ui_EditPartDialog
 {
 public:
     QVBoxLayout *verticalLayout_2;
@@ -46,14 +46,14 @@ public:
     QLineEdit *locationLineEdit;
     QDialogButtonBox *buttonBox;
 
-    void setupUi(QDialog *addPartDialog)
+    void setupUi(QDialog *EditPartDialog)
     {
-        if (addPartDialog->objectName().isEmpty())
-            addPartDialog->setObjectName("addPartDialog");
-        addPartDialog->resize(400, 300);
-        verticalLayout_2 = new QVBoxLayout(addPartDialog);
+        if (EditPartDialog->objectName().isEmpty())
+            EditPartDialog->setObjectName("EditPartDialog");
+        EditPartDialog->resize(400, 300);
+        verticalLayout_2 = new QVBoxLayout(EditPartDialog);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        windowNameLabel = new QLabel(addPartDialog);
+        windowNameLabel = new QLabel(EditPartDialog);
         windowNameLabel->setObjectName("windowNameLabel");
         QFont font;
         font.setPointSize(15);
@@ -68,12 +68,12 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        nameLabel = new QLabel(addPartDialog);
+        nameLabel = new QLabel(EditPartDialog);
         nameLabel->setObjectName("nameLabel");
 
         horizontalLayout->addWidget(nameLabel);
 
-        nameLineEdit = new QLineEdit(addPartDialog);
+        nameLineEdit = new QLineEdit(EditPartDialog);
         nameLineEdit->setObjectName("nameLineEdit");
 
         horizontalLayout->addWidget(nameLineEdit);
@@ -83,12 +83,12 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        catalogNumberLabel = new QLabel(addPartDialog);
+        catalogNumberLabel = new QLabel(EditPartDialog);
         catalogNumberLabel->setObjectName("catalogNumberLabel");
 
         horizontalLayout_2->addWidget(catalogNumberLabel);
 
-        catalogNumberLineEdit = new QLineEdit(addPartDialog);
+        catalogNumberLineEdit = new QLineEdit(EditPartDialog);
         catalogNumberLineEdit->setObjectName("catalogNumberLineEdit");
 
         horizontalLayout_2->addWidget(catalogNumberLineEdit);
@@ -98,13 +98,14 @@ public:
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName("horizontalLayout_4");
-        quantityLabel = new QLabel(addPartDialog);
+        quantityLabel = new QLabel(EditPartDialog);
         quantityLabel->setObjectName("quantityLabel");
 
         horizontalLayout_4->addWidget(quantityLabel);
 
-        quantitySpinBox = new QSpinBox(addPartDialog);
+        quantitySpinBox = new QSpinBox(EditPartDialog);
         quantitySpinBox->setObjectName("quantitySpinBox");
+        quantitySpinBox->setMaximum(500);
 
         horizontalLayout_4->addWidget(quantitySpinBox);
 
@@ -113,13 +114,14 @@ public:
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName("horizontalLayout_5");
-        priceLabel = new QLabel(addPartDialog);
+        priceLabel = new QLabel(EditPartDialog);
         priceLabel->setObjectName("priceLabel");
 
         horizontalLayout_5->addWidget(priceLabel);
 
-        priceDoubleSpinBox = new QDoubleSpinBox(addPartDialog);
+        priceDoubleSpinBox = new QDoubleSpinBox(EditPartDialog);
         priceDoubleSpinBox->setObjectName("priceDoubleSpinBox");
+        priceDoubleSpinBox->setMaximum(99999999.989999994635582);
 
         horizontalLayout_5->addWidget(priceDoubleSpinBox);
 
@@ -128,12 +130,12 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
-        localtionLabel = new QLabel(addPartDialog);
+        localtionLabel = new QLabel(EditPartDialog);
         localtionLabel->setObjectName("localtionLabel");
 
         horizontalLayout_3->addWidget(localtionLabel);
 
-        locationLineEdit = new QLineEdit(addPartDialog);
+        locationLineEdit = new QLineEdit(EditPartDialog);
         locationLineEdit->setObjectName("locationLineEdit");
 
         horizontalLayout_3->addWidget(locationLineEdit);
@@ -144,7 +146,7 @@ public:
 
         verticalLayout_2->addLayout(verticalLayout);
 
-        buttonBox = new QDialogButtonBox(addPartDialog);
+        buttonBox = new QDialogButtonBox(EditPartDialog);
         buttonBox->setObjectName("buttonBox");
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
@@ -152,30 +154,30 @@ public:
         verticalLayout_2->addWidget(buttonBox);
 
 
-        retranslateUi(addPartDialog);
-        QObject::connect(buttonBox, &QDialogButtonBox::accepted, addPartDialog, qOverload<>(&QDialog::accept));
-        QObject::connect(buttonBox, &QDialogButtonBox::rejected, addPartDialog, qOverload<>(&QDialog::reject));
+        retranslateUi(EditPartDialog);
+        QObject::connect(buttonBox, &QDialogButtonBox::accepted, EditPartDialog, qOverload<>(&QDialog::accept));
+        QObject::connect(buttonBox, &QDialogButtonBox::rejected, EditPartDialog, qOverload<>(&QDialog::reject));
 
-        QMetaObject::connectSlotsByName(addPartDialog);
+        QMetaObject::connectSlotsByName(EditPartDialog);
     } // setupUi
 
-    void retranslateUi(QDialog *addPartDialog)
+    void retranslateUi(QDialog *EditPartDialog)
     {
-        addPartDialog->setWindowTitle(QCoreApplication::translate("addPartDialog", "Dialog", nullptr));
-        windowNameLabel->setText(QCoreApplication::translate("addPartDialog", "DODAJ", nullptr));
-        nameLabel->setText(QCoreApplication::translate("addPartDialog", "Nazwa cz\304\231\305\233ci:", nullptr));
-        catalogNumberLabel->setText(QCoreApplication::translate("addPartDialog", "Numer Katalogowy:", nullptr));
-        quantityLabel->setText(QCoreApplication::translate("addPartDialog", "Ilo\305\233\304\207:", nullptr));
-        priceLabel->setText(QCoreApplication::translate("addPartDialog", "Cena:", nullptr));
-        localtionLabel->setText(QCoreApplication::translate("addPartDialog", "Lokalizacja:", nullptr));
+        EditPartDialog->setWindowTitle(QCoreApplication::translate("EditPartDialog", "Dialog", nullptr));
+        windowNameLabel->setText(QCoreApplication::translate("EditPartDialog", "EDYCJA", nullptr));
+        nameLabel->setText(QCoreApplication::translate("EditPartDialog", "Nazwa cz\304\231\305\233ci:", nullptr));
+        catalogNumberLabel->setText(QCoreApplication::translate("EditPartDialog", "Numer Katalogowy:", nullptr));
+        quantityLabel->setText(QCoreApplication::translate("EditPartDialog", "Ilo\305\233\304\207:", nullptr));
+        priceLabel->setText(QCoreApplication::translate("EditPartDialog", "Cena:", nullptr));
+        localtionLabel->setText(QCoreApplication::translate("EditPartDialog", "Lokalizacja:", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class addPartDialog: public Ui_addPartDialog {};
+    class EditPartDialog: public Ui_EditPartDialog {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_ADDPARTDIALOG_H
+#endif // UI_EDITPARTDIALOG_H

@@ -17,7 +17,6 @@ public:
     ~addPartDialog();
 
     Part getPartData() const;
-
 private:
     Ui::addPartDialog *ui;
 };

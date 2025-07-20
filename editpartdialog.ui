@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>addPartDialog</class>
- <widget class="QDialog" name="addPartDialog">
+ <class>EditPartDialog</class>
+ <widget class="QDialog" name="EditPartDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -26,7 +26,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>DODAJ</string>
+      <string>EDYCJA</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -73,7 +73,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="quantitySpinBox"/>
+        <widget class="QSpinBox" name="quantitySpinBox">
+         <property name="maximum">
+          <number>500</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -87,7 +91,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="priceDoubleSpinBox"/>
+        <widget class="QDoubleSpinBox" name="priceDoubleSpinBox">
+         <property name="maximum">
+          <double>99999999.989999994635582</double>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -124,7 +132,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>addPartDialog</receiver>
+   <receiver>EditPartDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -140,7 +148,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>addPartDialog</receiver>
+   <receiver>EditPartDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

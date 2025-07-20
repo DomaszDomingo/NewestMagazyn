@@ -4,6 +4,8 @@
 #include <QSqlDatabase>
 #include "part.h"
 #include "location.h"
+#include <QStandardPaths>
+#include <QDir>
 
 class databaseManager
 {

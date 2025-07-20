@@ -1,15 +1,37 @@
 #include "warehousemanager.h"
 
-WarehouseManager::WarehouseManager(QObject *parent) : QAbstractTableModel(parent)
-{
 
+WarehouseManager::WarehouseManager(databaseManager & dbManager, QObject *parent)
+    : QAbstractTableModel(parent)
+    ,m_dbManager(dbManager)             // inicjalizacja referencji
+{
+    //od razu po stworzeniu obiektu, załaduj dane z bazy
+    m_parts = m_dbManager.getAllParts();
 }
 
 void WarehouseManager::addPart(const Part &part)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());              //rowCount jest 2 razy, poniewaz za pierwszy to jest "first element"  w funkcji, a drugi to "last element". Umozliwia to dodawanie nastepnych elementów na koniec listy
-    m_parts.append(part);
-    endInsertRows();
+   //sygnały informujące widok, ze model zostanie całkowicie zresetowany
+   beginResetModel();
+   //odśwież listę częsći bezpośrednio z bazy danych
+   m_parts = m_dbManager.getAllParts();
+   //sygnał kończący resetowanie
+   endResetModel();
+
+}
+
+void WarehouseManager::updatePart(const Part &part)
+{
+    for (int i = 0; i < m_parts.count(); ++i){
+        if (m_parts.at(i).id() == part.id()){
+            m_parts[i] = part;
+
+            QModelIndex topLeft = index(i,0);
+            QModelIndex bottomRight = index(i, ColumnCount - 1);
+            emit dataChanged(topLeft,bottomRight);
+            return;
+        }
+    }
 }
 
 int WarehouseManager::rowCount(const QModelIndex &parent) const
@@ -68,4 +90,13 @@ QVariant WarehouseManager::headerData(int section, Qt::Orientation orientation, 
     default:
         return QVariant();
     }
+}
+
+Part WarehouseManager::getPartAtIndex(const QModelIndex &index) const
+{
+    //sprawdzenie poprawności
+    if (index.isValid() && index.row() < m_parts.count()){
+        return m_parts.at(index.row());
+    }
+    return Part();  //zwraca pusty obiekt jeśli indeks jest niepoprawny
 }

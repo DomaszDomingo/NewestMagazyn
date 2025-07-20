@@ -96,9 +96,24 @@ void databaseManager::deletePart(int id)
 
 void databaseManager::openDatabase()
 {
+    //ustawienie standardowego folderu dla danych aplikacji
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+    QDir dir (dataPath);
+
+    //tworzenie folderu jeżeli nie istnieje
+    if(!dir.exists()){
+        dir.mkpath("."); // kropka ozncza utworzenie ścieżki zdefiniowanej w "dir"
+    }
+
+    //Połączenie scieżki do folderu z nazwa pliku bazy danych
+
+    QString dbPath = dataPath + "/warehouse.db";
+    qDebug() << "Ścieżka bazy danych: " << dbPath; // wyświetlenie ściezki
+
     m_db = QSqlDatabase::addDatabase("QSQLITE");
 
-    m_db.setDatabaseName("warehouse.db");
+    m_db.setDatabaseName(dbPath);
 
     if(!m_db.open()){
         qDebug() << "Błąd. Połączenie z bazą danych nieudane: " << m_db.lastError();
