@@ -18,7 +18,7 @@ public:
 private:
     void openDatabase();
     void createTables();
-    QSqlDatabase m_db;
+    QSqlDatabase m_db;                                                      //obiekt reprezentujący połączenie z bazą danych
 };
 
 #endif // DATABASEMANAGER_H

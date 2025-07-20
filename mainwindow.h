@@ -22,12 +22,12 @@ public:
 private:
     Ui::MainWindow *ui;
     WarehouseManager *m_warehouseManager;
-    databaseManager m_dbManager;
+    DatabaseManager m_dbManager;                            //obiekt ktory jest polem klasy MainWindow
 
 
 
 private slots:
-    void on_addButton_clicked();
+    void on_addButton_clicked();                           //slot ktory po kliknieciu przycisku Dodaj otworzy okno dodawania materiału
 
 };
 #endif // MAINWINDOW_H

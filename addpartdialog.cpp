@@ -13,6 +13,8 @@ addPartDialog::~addPartDialog()
     delete ui;
 }
 
+
+// Metoda, która zbiera dane z pól
 Part addPartDialog::getPartData() const
 {
     QString name = ui->nameLineEdit->text();
@@ -20,6 +22,8 @@ Part addPartDialog::getPartData() const
     int quantity = ui->quantitySpinBox->value();
     double price = ui->priceDoubleSpinBox->value();
 
+
+    //Lokalizacja pobierana jako prosty tekst. Do rozbudowy w przyszłości
     Location location (ui->locationLineEdit->text(),0,0);
 
     return Part (name, catalogNumber, quantity, price, location);

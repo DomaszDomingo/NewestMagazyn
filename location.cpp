@@ -37,6 +37,7 @@ void Location::setShelf(int shelf)
     m_shelf = shelf;
 }
 
+//Tworzy reprezentację tekstową np. "A-05-10"
 QString Location::toString() const
 {
     return QString("%1-%2-%3")

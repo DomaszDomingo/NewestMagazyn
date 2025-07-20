@@ -39,12 +39,12 @@ const Location &Part::location() const
     return m_location;
 }
 
-int Part::id() const
+int Part::id() const                                                        //metoda do zarządania ID obiektu Part
 {
     return m_id;
 }
 
-int Part::setId(int id)
+int Part::setId(int id)                                                     //setter do ustawiania id obiektu Part
 {
     m_id = id;
 }

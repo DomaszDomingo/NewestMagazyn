@@ -6,15 +6,15 @@
 #include "location.h"
 
 
-databaseManager::databaseManager() {
+DatabaseManager::DatabaseManager() {
 
-    openDatabase();
-    createTables();
+    openDatabase();                                                                                 //metoda otwierająca połączenie z bazą danych SQLite
+    createTables();                                                                                 //metoda tworząca tabele 'Parts', chyba że już istnieje
 }
 
 
-//Dodawanie części
-void databaseManager::addPart(const Part &part)
+//Dodawanie części, gdzie part to obiekt części do dodania
+void DatabaseManager::addPart(const Part &part)
 {
     QSqlQuery query (m_db);
     query.prepare("INSERT INTO Parts (name, catalogNumber, quantity, price, locationAisle, locationRack, locationShelf) "
@@ -32,8 +32,8 @@ void databaseManager::addPart(const Part &part)
         qDebug() << "Błąd dodawania części" << query.lastError();
     }
 }
-//Odczytywanie wszystkich częsci z bazy danych
-QList<Part> databaseManager::getAllParts() const
+//Odczytywanie wszystkich częsci z bazy danych. Zwraca liste obiektów Part
+QList<Part> DatabaseManager::getAllParts() const
 {
     QList<Part> parts;
     QSqlQuery query ("SELECT * FROM Parts", m_db);
@@ -63,8 +63,8 @@ QList<Part> databaseManager::getAllParts() const
 }
 
 
-//aktualizacja części
-void databaseManager::updatePart(const Part &part)
+//aktualizacja części, parametrem są obiekty Part, z danymi (identyfikowanymi poprzez ID)
+void DatabaseManager::updatePart(const Part &part)
 {
     QSqlQuery query (m_db);
     query.prepare("UPDATE Parts SET name = :name, catalogNumber = :catalogNumber, quantity = :quantity, "
@@ -86,8 +86,8 @@ void databaseManager::updatePart(const Part &part)
 }
 
 
-//usuwanie częsci
-void databaseManager::deletePart(int id)
+//usuwanie części na podstawie ID
+void DatabaseManager::deletePart(int id)
 {
     QSqlQuery query (m_db);
     query.prepare("DELETE FROM Parts WHERE id = :id");
@@ -100,13 +100,17 @@ void databaseManager::deletePart(int id)
 }
 
 
-void databaseManager::openDatabase()
+void DatabaseManager::openDatabase()
 {
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
 
+    //Dodanie bazy danych przy użyciu sterownika QSQLITE
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
+    //nadanie nazwy dla bazy danych
     m_db.setDatabaseName("warehouse.db");
 
+    //weryfikacja otwarcia bazy danych
     if(!m_db.open()){
+
         qDebug() << "Błąd. Połączenie z bazą danych nieudane: " << m_db.lastError();
     }else{
         qDebug() << "Baza danych: Nawiązano połaczenie.";
@@ -114,7 +118,10 @@ void databaseManager::openDatabase()
 
 }
 
-void databaseManager::createTables()
+void DatabaseManager::createTables()
+
+//Zapytanie SQL tworzące tabelę 'Parts'
+// "IF NOT EXIST" zapobiega zdublowaniu tabeli.
 {
     QString createQuery = "CREATE TABLE IF NOT EXISTS Parts ("
                           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -126,9 +133,11 @@ void databaseManager::createTables()
                           "locationRack INTEGER, "
                           "locationShelf INTEGER"
                           ");";
-
+    //Utworzenie obiektu QSqlQuery zeby wykonac zapytanie
     QSqlQuery query (m_db);
 
+
+    //Weryfikacja wykonania zapytania
     if(!query.exec(createQuery)){
         qDebug() << "Nie można utworzyć tabeli 'Parts':" << query.lastError();
     }else{
