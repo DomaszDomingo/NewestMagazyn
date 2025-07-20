@@ -28,14 +28,14 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
     QLineEdit *filterLineEdit;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
     QPushButton *addButton;
     QPushButton *editButton;
-    QPushButton *pushButton_3;
+    QPushButton *deleteButton;
     QTableView *partsTableView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -47,13 +47,13 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        widget = new QWidget(centralwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(131, 20, 348, 226));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(centralwidget);
+        layoutWidget->setObjectName("layoutWidget");
+        layoutWidget->setGeometry(QRect(131, 20, 348, 226));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        filterLineEdit = new QLineEdit(widget);
+        filterLineEdit = new QLineEdit(layoutWidget);
         filterLineEdit->setObjectName("filterLineEdit");
 
         verticalLayout_2->addWidget(filterLineEdit);
@@ -62,25 +62,25 @@ public:
         horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
-        addButton = new QPushButton(widget);
+        addButton = new QPushButton(layoutWidget);
         addButton->setObjectName("addButton");
 
         verticalLayout->addWidget(addButton);
 
-        editButton = new QPushButton(widget);
+        editButton = new QPushButton(layoutWidget);
         editButton->setObjectName("editButton");
 
         verticalLayout->addWidget(editButton);
 
-        pushButton_3 = new QPushButton(widget);
-        pushButton_3->setObjectName("pushButton_3");
+        deleteButton = new QPushButton(layoutWidget);
+        deleteButton->setObjectName("deleteButton");
 
-        verticalLayout->addWidget(pushButton_3);
+        verticalLayout->addWidget(deleteButton);
 
 
         horizontalLayout->addLayout(verticalLayout);
 
-        partsTableView = new QTableView(widget);
+        partsTableView = new QTableView(layoutWidget);
         partsTableView->setObjectName("partsTableView");
 
         horizontalLayout->addWidget(partsTableView);
@@ -107,7 +107,7 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         addButton->setText(QCoreApplication::translate("MainWindow", "Dodaj", nullptr));
         editButton->setText(QCoreApplication::translate("MainWindow", "Edytuj", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Usu\305\204", nullptr));
+        deleteButton->setText(QCoreApplication::translate("MainWindow", "Usu\305\204", nullptr));
     } // retranslateUi
 
 };

@@ -11,6 +11,9 @@ MainWindow::MainWindow (QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
+
     m_warehouseManager = new WarehouseManager(m_dbManager, this);
     ui->partsTableView->setModel(m_warehouseManager);
 
