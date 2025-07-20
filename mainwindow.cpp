@@ -30,7 +30,7 @@ void MainWindow::on_addButton_clicked()
     if (dialog.exec() == QDialog::Accepted){
         Part newPart = dialog.getPartData();
 
-        m_warehouseManager->addPart(newPart);
+        m_dbManager.addPart(newPart);
 
         m_warehouseManager->addPart(newPart);
     }
@@ -56,5 +56,30 @@ void MainWindow::on_editButton_clicked()
         m_warehouseManager->updatePart(updatedPart);
         //zleć aktualizację w bazie danych
         m_dbManager.updatePart(updatedPart);
+    }
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    //pobranie aktualnie zaznaczonego indeksu w tabeli
+    const QModelIndex currentIndex = ui->partsTableView->selectionModel()->currentIndex();
+
+    if (!currentIndex.isValid()){
+        QMessageBox::warning(this, "Brak zaznaczenia", "Proszę najpierw zaznaczyć część do usunięcia");
+        return;
+    }
+    //wyświetlenie okna dialogowego z potwierdzeniem
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this,"Potwierdzenie usunięcia", "Czy na pewno chcesz usunąć wybrany rekord?",
+        QMessageBox::Yes|QMessageBox::No);
+    //jezeli tak
+    if (reply == QMessageBox::Yes){
+        Part partToDelete = m_warehouseManager->getPartAtIndex(currentIndex);
+
+        //zlecenie usunięcia rekordu z bazy danych
+        m_dbManager.deletePart(partToDelete.id());
+
+        //zlecenie usunięcia wiersza z modelu(odświeża tabele)
+        m_warehouseManager->deletePart(currentIndex.row());
     }
 }

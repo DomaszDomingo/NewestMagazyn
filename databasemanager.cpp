@@ -28,11 +28,17 @@ void databaseManager::addPart(const Part &part)
 
     if(!query.exec()){
         qDebug() << "Błąd dodawania części" << query.lastError();
+    } else {
+        qDebug() <<"Funkcja addPart wykonana pomyślnie. Ilość dodanych rekordów:" << query.numRowsAffected();
     }
+
+
 }
 
 QList<Part> databaseManager::getAllParts() const
 {
+    qDebug() << "Wywołanie getAllParts";
+
     QList<Part> parts;
     QSqlQuery query ("SELECT * FROM Parts", m_db);
 
@@ -57,6 +63,8 @@ QList<Part> databaseManager::getAllParts() const
 
         parts.append(part);
     }
+
+    qDebug() << "getAllParts zakończona. Znaleziono" << parts.count() << "części w bazie.";
     return parts;
 }
 

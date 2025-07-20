@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "warehousemanager.h"
 #include "databasemanager.h"
+#include <QMessageBox>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,7 @@ private:
 private slots:
     void on_addButton_clicked();
     void on_editButton_clicked();
+    void on_deleteButton_clicked();
 
 };
 #endif // MAINWINDOW_H

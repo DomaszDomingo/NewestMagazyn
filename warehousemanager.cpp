@@ -11,6 +11,8 @@ WarehouseManager::WarehouseManager(databaseManager & dbManager, QObject *parent)
 
 void WarehouseManager::addPart(const Part &part)
 {
+
+    qDebug() << "WarehouseManager::add part wywołana. Resetowanie modelu...";
    //sygnały informujące widok, ze model zostanie całkowicie zresetowany
    beginResetModel();
    //odśwież listę częsći bezpośrednio z bazy danych
@@ -32,6 +34,23 @@ void WarehouseManager::updatePart(const Part &part)
             return;
         }
     }
+}
+
+void WarehouseManager::deletePart(int row)
+{
+    //sprawdzenie poprawności indeksu wiersza
+    if (row < 0 || row >= m_parts.count()){
+        return;
+    }
+    //informacja dla widokow, ze wiersze zostaną usunięte
+    beginRemoveRows(QModelIndex(),row,row);
+
+    //usuń element z wewnętrznej listy
+    m_parts.removeAt(row);
+
+    //zakończenie usuwania i odswieżenie widoku
+    endRemoveRows();
+
 }
 
 int WarehouseManager::rowCount(const QModelIndex &parent) const
