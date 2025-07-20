@@ -101,7 +101,7 @@ QVariant WarehouseManager::headerData(int section, Qt::Orientation orientation, 
     case CatalogNumber:
         return "Numer katalogowy";
     case Quantity:
-        return "Ilośc";
+        return "Ilość";
     case Price:
         return "Cena (PLN)";
     case ColumnLocation:

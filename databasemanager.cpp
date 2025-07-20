@@ -101,6 +101,40 @@ void databaseManager::deletePart(int id)
 
 }
 
+std::optional<Part> databaseManager::getPartByCatalogNumber(const QString &catalogNumber) const
+{
+    QSqlQuery query(m_db);
+    query.prepare("SELECT * FROM Parts WHERE catalogNumber = :catalogNumber");
+    query.bindValue(":catalogNumber", catalogNumber);
+
+    if(!query.exec()){
+        qDebug() << "Błąd wyszukania cześci po numerze katalogowym" << query.lastError();
+        return std::nullopt; //zwróć pusty optional w razie błędu
+    }
+    //sprawdz czy znaleziono jakikolwiek rekord
+    if(query.next()){
+        //Znaleziono część - stworz obiekt i go zwróć
+        Part part;
+        part.setId(query.value("id").toInt());
+        part.setName(query.value("name").toString());
+        part.setCatalogNumber(query.value("catalogNumber").toString());
+        part.setQuantity(query.value("quantity").toInt());
+        part.setPrice(query.value("price").toDouble());
+
+        Location location (
+            query.value("locationAisle").toString(),
+            query.value("locationRack").toInt(),
+            query.value("locationShelf").toInt()
+            );
+        part.setLocation(location);
+
+        return part;
+
+    }
+    //Nie znaleziono części
+    return std::nullopt;
+}
+
 
 void databaseManager::openDatabase()
 {

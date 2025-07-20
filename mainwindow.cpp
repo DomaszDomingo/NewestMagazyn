@@ -11,11 +11,10 @@ MainWindow::MainWindow (QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
-
     m_warehouseManager = new WarehouseManager(m_dbManager, this);
     ui->partsTableView->setModel(m_warehouseManager);
+    ui->partsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->partsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
 
 }
@@ -32,6 +31,31 @@ void MainWindow::on_addButton_clicked()
 
     if (dialog.exec() == QDialog::Accepted){
         Part newPart = dialog.getPartData();
+        Part partFromDialog = dialog.getPartData();
+
+        //sprawdz czy część o tym numerze katalogowym istnieje
+        auto existingPartOpt = m_dbManager.getPartByCatalogNumber(partFromDialog.catalogNumber());
+
+        if (existingPartOpt.has_value()){
+            //część istnieje - zaktualizuj ilość
+            Part existingPart = *existingPartOpt; //rozpakuj obiekt z optional
+            int newQuantity = existingPart.quantity() + partFromDialog.quantity();
+            existingPart.setQuantity(newQuantity);
+
+            //zlec aktualizacje w bazie danych
+            m_dbManager.updatePart(existingPart);
+
+            QMessageBox::information(this,"Aktualizacja ilości", QString("Część '%1' juz istniała w bazie. Jej ilość została zaktualizowana do %2 szt.")
+                                         .arg(existingPart.name()).arg(newQuantity));
+        } else {
+
+            //Częśc nie istnieje - dodaj nowy rekord
+            m_dbManager.addPart(partFromDialog);
+        }
+
+        //odświez model zeby pokazac zmiany
+
+        m_warehouseManager->addPart(partFromDialog);
 
         m_dbManager.addPart(newPart);
 

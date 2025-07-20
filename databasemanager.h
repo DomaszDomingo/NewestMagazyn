@@ -6,6 +6,7 @@
 #include "location.h"
 #include <QStandardPaths>
 #include <QDir>
+#include <optional>
 
 class databaseManager
 {
@@ -15,6 +16,7 @@ public:
     QList<Part> getAllParts() const;
     void updatePart (const Part & part);
     void deletePart (int id);
+    std::optional<Part> getPartByCatalogNumber (const QString & catalogNumber) const;
 
 
 private:
