@@ -17,12 +17,13 @@ public:
     void updatePart (const Part & part);
     void deletePart (int id);
     std::optional<Part> getPartByCatalogNumber (const QString & catalogNumber) const;
-
+    QList<QPointF> getQuantityHistoryForPart(int partId) const;
 
 private:
     void openDatabase();
     void createTables();
     QSqlDatabase m_db;
+    void logQuantityChange (int partId, int newQuantity, const QString &description);
 };
 
 #endif // DATABASEMANAGER_H

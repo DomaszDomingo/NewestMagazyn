@@ -9,6 +9,7 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <QtCharts/QChartView>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
@@ -28,12 +29,14 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QWidget *widget;
+    QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QPushButton *addButton;
     QPushButton *editButton;
     QPushButton *deleteButton;
     QTableView *partsTableView;
+    QChartView *quantityChartView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -46,10 +49,12 @@ public:
         centralwidget->setObjectName("centralwidget");
         widget = new QWidget(centralwidget);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(20, 10, 502, 234));
-        verticalLayout = new QVBoxLayout(widget);
+        widget->setGeometry(QRect(20, 10, 504, 434));
+        verticalLayout_2 = new QVBoxLayout(widget);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         addButton = new QPushButton(widget);
@@ -76,6 +81,14 @@ public:
         partsTableView->setBaseSize(QSize(3, 0));
 
         verticalLayout->addWidget(partsTableView);
+
+
+        verticalLayout_2->addLayout(verticalLayout);
+
+        quantityChartView = new QChartView(widget);
+        quantityChartView->setObjectName("quantityChartView");
+
+        verticalLayout_2->addWidget(quantityChartView);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);

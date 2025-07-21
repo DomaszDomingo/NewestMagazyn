@@ -16,6 +16,29 @@ MainWindow::MainWindow (QWidget *parent)
     ui->partsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->partsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    m_chart = new QChart();
+    m_series = new QLineSeries();
+    m_chart->addSeries(m_series);
+
+    auto *axisX = new QDateTimeAxis;
+    axisX->setTickCount(5);
+    axisX->setFormat("dd.MM.yy HH:mm");
+    axisX->setTitleText("Data zmiany");
+    m_chart->addAxis(axisX, Qt::AlignBottom);
+    m_series->attachAxis(axisX);
+
+    auto *axisY = new QValueAxis;
+    axisY->setLabelFormat("%i");
+    axisY->setTitleText("Ilość");
+    m_chart->addAxis(axisY, Qt::AlignLeft);
+    m_series->attachAxis(axisY);
+
+    m_chart->legend()->hide();
+    ui->quantityChartView->setChart(m_chart);
+    ui->quantityChartView->setRenderHint(QPainter::Antialiasing);
+
+    connect (ui->partsTableView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this,&MainWindow::onPartSelectionChanged);
 
 }
 
@@ -40,7 +63,7 @@ void MainWindow::on_addButton_clicked()
         Part existingPart = *existingPartOpt;
         existingPart.setQuantity(existingPart.quantity() + partFromDialog.quantity());
         m_dbManager.updatePart(existingPart);
-        QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takin numerze katalogowym istnieje. Zaktualizowano ilość");
+        QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takim numerze katalogowym istnieje. Zaktualizowano ilość");
 
     } else {
         //część nie istnieje dodaj do bazy
@@ -95,5 +118,40 @@ void MainWindow::on_deleteButton_clicked()
 
         //zlecenie usunięcia wiersza z modelu(odświeża tabele)
         m_warehouseManager->deletePart(currentIndex.row());
+    }
+}
+
+void MainWindow::onPartSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    Q_UNUSED(deselected);
+    if(selected.isEmpty() || !selected.first().isValid()){
+        m_series->clear();
+        m_chart->setTitle("Wybierz część, aby zobaczyć historię");
+        return;
+    }
+
+    QModelIndex selectedIndex = selected.first().indexes().first();
+    Part selectedPart = m_warehouseManager->getPartAtIndex(selectedIndex);
+
+    QList<QPointF> history = m_dbManager.getQuantityHistoryForPart(selectedPart.id());
+
+    m_series->replace(history);
+
+    m_chart->setTitle("Historia ilości dla: " + selectedPart.name());
+
+    if (!history.isEmpty()){
+        QDateTime minDate = QDateTime::fromMSecsSinceEpoch(history.first().x());
+        QDateTime maxDate = QDateTime::fromMSecsSinceEpoch(history.last().x());
+
+        double minQty = history.first().y();
+        double maxQty = history.first().y();
+
+        for(const auto & point : history){
+            if (point.y() < minQty) minQty = point.y();
+            if (point.y() > maxQty) maxQty = point.y();
+        }
+
+        qobject_cast<QDateTimeAxis * > (m_chart->axes(Qt::Horizontal).first())->setRange(minDate,maxDate);
+        qobject_cast<QValueAxis * > (m_chart->axes(Qt::Vertical).first())->setRange(minQty - 1, maxQty +1);
     }
 }

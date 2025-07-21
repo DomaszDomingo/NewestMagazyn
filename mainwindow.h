@@ -5,6 +5,14 @@
 #include "warehousemanager.h"
 #include "databasemanager.h"
 #include <QMessageBox>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QValueAxis>
+#include <QItemSelection>
+
+//QT_CHARTS_USE_NAMESPACE
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -24,13 +32,15 @@ private:
     Ui::MainWindow *ui;
     WarehouseManager *m_warehouseManager;
     databaseManager m_dbManager;
-
+    QChart *m_chart;
+    QLineSeries *m_series;
 
 
 private slots:
     void on_addButton_clicked();
     void on_editButton_clicked();
     void on_deleteButton_clicked();
+    void onPartSelectionChanged(const QItemSelection & selected, const QItemSelection &deselected);
 
 };
 #endif // MAINWINDOW_H

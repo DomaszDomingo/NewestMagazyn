@@ -42,16 +42,24 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "on_addButton_clicked",
     "",
     "on_editButton_clicked",
-    "on_deleteButton_clicked"
+    "on_deleteButton_clicked",
+    "onPartSelectionChanged",
+    "QItemSelection",
+    "selected",
+    "deselected"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[10];
+    uint offsetsAndSizes[18];
     char stringdata0[11];
     char stringdata1[21];
     char stringdata2[1];
     char stringdata3[22];
     char stringdata4[24];
+    char stringdata5[23];
+    char stringdata6[15];
+    char stringdata7[9];
+    char stringdata8[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -61,13 +69,21 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(11, 20),  // "on_addButton_clicked"
         QT_MOC_LITERAL(32, 0),  // ""
         QT_MOC_LITERAL(33, 21),  // "on_editButton_clicked"
-        QT_MOC_LITERAL(55, 23)   // "on_deleteButton_clicked"
+        QT_MOC_LITERAL(55, 23),  // "on_deleteButton_clicked"
+        QT_MOC_LITERAL(79, 22),  // "onPartSelectionChanged"
+        QT_MOC_LITERAL(102, 14),  // "QItemSelection"
+        QT_MOC_LITERAL(117, 8),  // "selected"
+        QT_MOC_LITERAL(126, 10)   // "deselected"
     },
     "MainWindow",
     "on_addButton_clicked",
     "",
     "on_editButton_clicked",
-    "on_deleteButton_clicked"
+    "on_deleteButton_clicked",
+    "onPartSelectionChanged",
+    "QItemSelection",
+    "selected",
+    "deselected"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -79,7 +95,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -87,14 +103,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   32,    2, 0x08,    1 /* Private */,
-       3,    0,   33,    2, 0x08,    2 /* Private */,
-       4,    0,   34,    2, 0x08,    3 /* Private */,
+       1,    0,   38,    2, 0x08,    1 /* Private */,
+       3,    0,   39,    2, 0x08,    2 /* Private */,
+       4,    0,   40,    2, 0x08,    3 /* Private */,
+       5,    2,   41,    2, 0x08,    4 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 6,    7,    8,
 
        0        // eod
 };
@@ -113,7 +131,11 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_editButton_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_deleteButton_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onPartSelectionChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QItemSelection &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QItemSelection &, std::false_type>
     >,
     nullptr
 } };
@@ -127,10 +149,22 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_addButton_clicked(); break;
         case 1: _t->on_editButton_clicked(); break;
         case 2: _t->on_deleteButton_clicked(); break;
+        case 3: _t->onPartSelectionChanged((*reinterpret_cast< std::add_pointer_t<QItemSelection>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QItemSelection>>(_a[2]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 3:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QItemSelection >(); break;
+            }
+            break;
+        }
     }
-    (void)_a;
 }
 
 const QMetaObject *MainWindow::metaObject() const
@@ -152,13 +186,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        if (_id < 4)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 4;
     }
     return _id;
 }

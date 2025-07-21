@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "part.h"
 #include "location.h"
+#include <QPointF>
 
 
 databaseManager::databaseManager() {
@@ -22,8 +23,8 @@ void databaseManager::addPart(const Part &part)
     query.bindValue(":catalogNumber", part.catalogNumber());
     query.bindValue(":quantity", part.quantity());
     query.bindValue(":price",part.price());
-    query.bindValue("locationAisle",part.location().aisle());
-    query.bindValue("locationRack",part.location().rack());
+    query.bindValue(":locationAisle",part.location().aisle());
+    query.bindValue(":locationRack",part.location().rack());
     query.bindValue(":locationShelf",part.location().shelf());
 
     if(!query.exec()){
@@ -31,7 +32,8 @@ void databaseManager::addPart(const Part &part)
     } else {
         qDebug() <<"Funkcja addPart wykonana pomyślnie. Ilość dodanych rekordów:" << query.numRowsAffected();
     }
-
+    int newPartId = query.lastInsertId().toInt();
+    logQuantityChange(newPartId, part.quantity(), "Utworzenie nowej części");
 
 }
 
@@ -87,6 +89,8 @@ void databaseManager::updatePart(const Part &part)
     if (!query.exec()) {
         qDebug() << "Błąd aktualizacji części:" << query.lastError();
     }
+
+    logQuantityChange(part.id(),part.quantity(), "Aktualizacja danych");
 }
 
 void databaseManager::deletePart(int id)
@@ -133,6 +137,29 @@ std::optional<Part> databaseManager::getPartByCatalogNumber(const QString &catal
     }
     //Nie znaleziono części
     return std::nullopt;
+}
+
+QList<QPointF> databaseManager::getQuantityHistoryForPart(int partId) const
+{
+    QList<QPointF> history;
+    QSqlQuery query (m_db);
+
+    query.prepare("SELECT change_date, quantity_after_change FROM QuantityHistory "
+                  "WHERE part_id = :part_id ORDER BY change_date ASC");
+
+    query.bindValue(":part_id", partId);
+
+    if(!query.exec()){
+        qDebug() << "Błąd pobierania historii ilości: " << query.lastError();
+        return history;
+    }
+
+    while (query.next()){
+        QDateTime date = QDateTime::fromString(query.value(0).toString(), Qt::ISODate);
+        double quantity = query.value(1).toDouble();
+        history.append(QPointF(date.toMSecsSinceEpoch(), quantity));
+    }
+    return history;
 }
 
 
@@ -184,6 +211,37 @@ void databaseManager::createTables()
         qDebug() << "Nie można utworzyć tabeli 'Parts':" << query.lastError();
     }else{
         qDebug() << "Tabela 'Parts' została utworzona lub już istnieje.";
+    }
+
+    QString createHistoryQuery = "CREATE TABLE IF NOT EXISTS QuantityHistory ("
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                "part_id INTEGER NOT NULL,"
+                                "change_date TEXT NOT NULL,"
+                                "quantity_after_change INTEGER NOT NULL, "
+                                "change_description TEXT, "
+                                "FOREIGN KEY (part_id) REFERENCES Parts(id) ON DELETE CASCADE"
+                                ");";
+    QSqlQuery historyQuery (m_db);
+    if(!historyQuery.exec(createHistoryQuery)){
+        qDebug() << "Nie można utworzyć tabeli 'QuantityHistory':" << historyQuery.lastError();
+    } else {
+        qDebug() << "Tabela 'QuantityHistory' została utworzona lub już istnieje. ";
+    }
+}
+
+void databaseManager::logQuantityChange(int partId, int newQuantity, const QString &description)
+{
+    QSqlQuery query(m_db);
+    query.prepare("INSERT INTO QuantityHistory (part_id, change_date, quantity_after_change, change_description)"
+                  "VALUES (:part_id, :date, :quantity, :description)");
+
+    query.bindValue(":part_id", partId);
+    query.bindValue(":date", QDateTime::currentDateTime().toString(Qt::ISODate));
+    query.bindValue(":quantity", newQuantity);
+    query.bindValue(":description", description);
+
+    if(!query.exec()){
+        qDebug() << "Błąd logowania historii ilości:" << query.lastError();
     }
 }
 
