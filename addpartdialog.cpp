@@ -20,7 +20,10 @@ Part addPartDialog::getPartData() const
     int quantity = ui->quantitySpinBox->value();
     double price = ui->priceDoubleSpinBox->value();
 
-    Location location (ui->locationLineEdit->text(),0,0);
+    QString aisle = ui->aisleLineEdit->text();
+    int rack = ui->rackSpinBox->value();
+    int shelf = ui->shelfSpinBox->value();
+    Location location (aisle,rack,shelf);
 
     return Part (name, catalogNumber, quantity, price, location);
 }

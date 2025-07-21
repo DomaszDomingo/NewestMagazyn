@@ -28,39 +28,26 @@ MainWindow::~MainWindow(){
 void MainWindow::on_addButton_clicked()
 {
     addPartDialog dialog (this);
-
-    if (dialog.exec() == QDialog::Accepted){
-        Part newPart = dialog.getPartData();
-        Part partFromDialog = dialog.getPartData();
-
-        //sprawdz czy część o tym numerze katalogowym istnieje
-        auto existingPartOpt = m_dbManager.getPartByCatalogNumber(partFromDialog.catalogNumber());
-
-        if (existingPartOpt.has_value()){
-            //część istnieje - zaktualizuj ilość
-            Part existingPart = *existingPartOpt; //rozpakuj obiekt z optional
-            int newQuantity = existingPart.quantity() + partFromDialog.quantity();
-            existingPart.setQuantity(newQuantity);
-
-            //zlec aktualizacje w bazie danych
-            m_dbManager.updatePart(existingPart);
-
-            QMessageBox::information(this,"Aktualizacja ilości", QString("Część '%1' juz istniała w bazie. Jej ilość została zaktualizowana do %2 szt.")
-                                         .arg(existingPart.name()).arg(newQuantity));
-        } else {
-
-            //Częśc nie istnieje - dodaj nowy rekord
-            m_dbManager.addPart(partFromDialog);
-        }
-
-        //odświez model zeby pokazac zmiany
-
-        m_warehouseManager->addPart(partFromDialog);
-
-        m_dbManager.addPart(newPart);
-
-        m_warehouseManager->addPart(newPart);
+    if (dialog.exec() != QDialog::Accepted){
+        return; // Użytkownik anulował. Wyjście z funkcji
     }
+
+    Part partFromDialog = dialog.getPartData();
+    auto existingPartOpt = m_dbManager.getPartByCatalogNumber(partFromDialog.catalogNumber());
+
+    if (existingPartOpt.has_value()){
+        // część istnieje. Zaktualizuj w bazie
+        Part existingPart = *existingPartOpt;
+        existingPart.setQuantity(existingPart.quantity() + partFromDialog.quantity());
+        m_dbManager.updatePart(existingPart);
+        QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takin numerze katalogowym istnieje. Zaktualizowano ilość");
+
+    } else {
+        //część nie istnieje dodaj do bazy
+        m_dbManager.addPart(partFromDialog);
+    }
+
+    m_warehouseManager->refreshData();
 }
 
 void MainWindow::on_editButton_clicked()

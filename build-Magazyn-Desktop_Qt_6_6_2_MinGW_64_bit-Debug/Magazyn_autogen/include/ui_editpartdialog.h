@@ -18,6 +18,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
 
@@ -26,9 +27,8 @@ QT_BEGIN_NAMESPACE
 class Ui_EditPartDialog
 {
 public:
-    QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout_4;
     QLabel *windowNameLabel;
-    QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *nameLabel;
     QLineEdit *nameLineEdit;
@@ -41,9 +41,22 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QLabel *priceLabel;
     QDoubleSpinBox *priceDoubleSpinBox;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *localtionLabel;
-    QLineEdit *locationLineEdit;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *locationLabel;
+    QSpacerItem *horizontalSpacer;
+    QHBoxLayout *horizontalLayout_6;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *aisleLabel;
+    QLineEdit *aisleLineEdit;
+    QSpacerItem *horizontalSpacer_2;
+    QVBoxLayout *verticalLayout;
+    QLabel *rackLabel;
+    QSpinBox *rackSpinBox;
+    QSpacerItem *horizontalSpacer_3;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *shelfLabel;
+    QSpinBox *shelfSpinBox;
+    QSpacerItem *verticalSpacer;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *EditPartDialog)
@@ -51,8 +64,8 @@ public:
         if (EditPartDialog->objectName().isEmpty())
             EditPartDialog->setObjectName("EditPartDialog");
         EditPartDialog->resize(400, 300);
-        verticalLayout_2 = new QVBoxLayout(EditPartDialog);
-        verticalLayout_2->setObjectName("verticalLayout_2");
+        verticalLayout_4 = new QVBoxLayout(EditPartDialog);
+        verticalLayout_4->setObjectName("verticalLayout_4");
         windowNameLabel = new QLabel(EditPartDialog);
         windowNameLabel->setObjectName("windowNameLabel");
         QFont font;
@@ -62,10 +75,8 @@ public:
         windowNameLabel->setTabletTracking(false);
         windowNameLabel->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
 
-        verticalLayout_2->addWidget(windowNameLabel);
+        verticalLayout_4->addWidget(windowNameLabel);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName("verticalLayout");
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         nameLabel = new QLabel(EditPartDialog);
@@ -79,7 +90,7 @@ public:
         horizontalLayout->addWidget(nameLineEdit);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout_4->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
@@ -94,7 +105,7 @@ public:
         horizontalLayout_2->addWidget(catalogNumberLineEdit);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_4->addLayout(horizontalLayout_2);
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName("horizontalLayout_4");
@@ -110,7 +121,7 @@ public:
         horizontalLayout_4->addWidget(quantitySpinBox);
 
 
-        verticalLayout->addLayout(horizontalLayout_4);
+        verticalLayout_4->addLayout(horizontalLayout_4);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName("horizontalLayout_5");
@@ -126,32 +137,92 @@ public:
         horizontalLayout_5->addWidget(priceDoubleSpinBox);
 
 
-        verticalLayout->addLayout(horizontalLayout_5);
+        verticalLayout_4->addLayout(horizontalLayout_5);
 
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName("horizontalLayout_3");
-        localtionLabel = new QLabel(EditPartDialog);
-        localtionLabel->setObjectName("localtionLabel");
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName("horizontalLayout_7");
+        locationLabel = new QLabel(EditPartDialog);
+        locationLabel->setObjectName("locationLabel");
 
-        horizontalLayout_3->addWidget(localtionLabel);
+        horizontalLayout_7->addWidget(locationLabel);
 
-        locationLineEdit = new QLineEdit(EditPartDialog);
-        locationLineEdit->setObjectName("locationLineEdit");
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        horizontalLayout_3->addWidget(locationLineEdit);
+        horizontalLayout_7->addItem(horizontalSpacer);
+
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName("verticalLayout_3");
+        aisleLabel = new QLabel(EditPartDialog);
+        aisleLabel->setObjectName("aisleLabel");
+        aisleLabel->setMaximumSize(QSize(39, 25));
+
+        verticalLayout_3->addWidget(aisleLabel);
+
+        aisleLineEdit = new QLineEdit(EditPartDialog);
+        aisleLineEdit->setObjectName("aisleLineEdit");
+        aisleLineEdit->setMaximumSize(QSize(39, 25));
+
+        verticalLayout_3->addWidget(aisleLineEdit);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        horizontalLayout_6->addLayout(verticalLayout_3);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_2);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName("verticalLayout");
+        rackLabel = new QLabel(EditPartDialog);
+        rackLabel->setObjectName("rackLabel");
+
+        verticalLayout->addWidget(rackLabel);
+
+        rackSpinBox = new QSpinBox(EditPartDialog);
+        rackSpinBox->setObjectName("rackSpinBox");
+
+        verticalLayout->addWidget(rackSpinBox);
 
 
-        verticalLayout_2->addLayout(verticalLayout);
+        horizontalLayout_6->addLayout(verticalLayout);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_3);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        shelfLabel = new QLabel(EditPartDialog);
+        shelfLabel->setObjectName("shelfLabel");
+
+        verticalLayout_2->addWidget(shelfLabel);
+
+        shelfSpinBox = new QSpinBox(EditPartDialog);
+        shelfSpinBox->setObjectName("shelfSpinBox");
+
+        verticalLayout_2->addWidget(shelfSpinBox);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_2);
+
+
+        horizontalLayout_7->addLayout(horizontalLayout_6);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_7);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        verticalLayout_4->addItem(verticalSpacer);
 
         buttonBox = new QDialogButtonBox(EditPartDialog);
         buttonBox->setObjectName("buttonBox");
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        verticalLayout_2->addWidget(buttonBox);
+        verticalLayout_4->addWidget(buttonBox);
 
 
         retranslateUi(EditPartDialog);
@@ -169,7 +240,10 @@ public:
         catalogNumberLabel->setText(QCoreApplication::translate("EditPartDialog", "Numer Katalogowy:", nullptr));
         quantityLabel->setText(QCoreApplication::translate("EditPartDialog", "Ilo\305\233\304\207:", nullptr));
         priceLabel->setText(QCoreApplication::translate("EditPartDialog", "Cena:", nullptr));
-        localtionLabel->setText(QCoreApplication::translate("EditPartDialog", "Lokalizacja:", nullptr));
+        locationLabel->setText(QCoreApplication::translate("EditPartDialog", "Lokalizacja", nullptr));
+        aisleLabel->setText(QCoreApplication::translate("EditPartDialog", "Alejka", nullptr));
+        rackLabel->setText(QCoreApplication::translate("EditPartDialog", "Rega\305\202", nullptr));
+        shelfLabel->setText(QCoreApplication::translate("EditPartDialog", "P\303\263\305\202ka", nullptr));
     } // retranslateUi
 
 };

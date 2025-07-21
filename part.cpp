@@ -44,7 +44,7 @@ int Part::id() const
     return m_id;
 }
 
-int Part::setId(int id)
+void Part::setId(int id)
 {
     m_id = id;
 }

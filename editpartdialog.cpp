@@ -11,7 +11,10 @@ EditPartDialog::EditPartDialog(const Part & partToEdit, QWidget *parent)
     ui->catalogNumberLineEdit->setText(partToEdit.catalogNumber());
     ui->quantitySpinBox->setValue(partToEdit.quantity());
     ui->priceDoubleSpinBox->setValue(partToEdit.price());
-    ui->locationLineEdit->setText(partToEdit.location().toString());
+    const Location & loc = partToEdit.location();
+    ui->aisleLineEdit->setText(loc.aisle());
+    ui->rackSpinBox->setValue(loc.rack());
+    ui->shelfSpinBox->setValue(loc.shelf());
 
     m_partId = partToEdit.id();
 }
@@ -28,13 +31,10 @@ Part EditPartDialog::getPartData() const
     int quantity = ui->quantitySpinBox->value();
     double price = ui->priceDoubleSpinBox->value();
 
-    QStringList locationParts = ui->locationLineEdit->text().split('-');
-    Location location;
-    if (locationParts.count() == 3) {
-        location.setAisle(locationParts[0]);
-        location.setRack(locationParts[1].toInt());
-        location.setShelf(locationParts[2].toInt());
-    }
+    QString aisle = ui->aisleLineEdit->text();
+    int rack = ui->rackSpinBox->value();
+    int shelf = ui->shelfSpinBox->value();
+    Location location (aisle, rack, shelf);
 
     //pobieranie danych z pól
     Part updatedPart (name, catalogNumber, quantity, price, location);

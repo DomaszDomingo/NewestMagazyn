@@ -15,7 +15,7 @@ public:
     double price () const;
     const Location & location () const;
     int id () const;
-    int setId(int id);
+    void setId(int id);
 
 
     void setName (const QString &name);

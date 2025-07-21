@@ -28,6 +28,7 @@ public:
     void addPart (const Part &part);
     void updatePart (const Part & part);
     void deletePart (int row);
+    void refreshData();
 
     int rowCount (const QModelIndex &parent = QModelIndex()) const override;
     int columnCount (const QModelIndex &parent = QModelIndex()) const override;

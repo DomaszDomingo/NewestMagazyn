@@ -53,6 +53,13 @@ void WarehouseManager::deletePart(int row)
 
 }
 
+void WarehouseManager::refreshData()
+{
+    beginResetModel();
+    m_parts = m_dbManager.getAllParts();
+    endResetModel();
+}
+
 int WarehouseManager::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
