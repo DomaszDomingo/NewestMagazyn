@@ -29,6 +29,7 @@ public:
     void updatePart (const Part & part);
     void deletePart (int row);
     void refreshData();
+    QList <Part> getAllParts() const;
 
     int rowCount (const QModelIndex &parent = QModelIndex()) const override;
     int columnCount (const QModelIndex &parent = QModelIndex()) const override;

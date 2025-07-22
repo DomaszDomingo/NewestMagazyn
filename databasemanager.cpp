@@ -70,7 +70,7 @@ QList<Part> databaseManager::getAllParts() const
     return parts;
 }
 
-void databaseManager::updatePart(const Part &part)
+void databaseManager::updatePart(const Part &part, const QString &changeDescription)
 {
     QSqlQuery query (m_db);
     query.prepare("UPDATE Parts SET name = :name, catalogNumber = :catalogNumber, quantity = :quantity, "
@@ -90,7 +90,7 @@ void databaseManager::updatePart(const Part &part)
         qDebug() << "Błąd aktualizacji części:" << query.lastError();
     }
 
-    logQuantityChange(part.id(),part.quantity(), "Aktualizacja danych");
+    logQuantityChange(part.id(),part.quantity(), changeDescription);
 }
 
 void databaseManager::deletePart(int id)

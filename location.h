@@ -3,9 +3,11 @@
 
 #include <QString>
 
+// klasa reprezentuje fizyczną lokalizację części z magazynie. Przechowuje informację o alejce regale i półce
 class Location
 {
 public:
+    //konstruktor domyślny i parametryczny
     Location();
     Location(const QString &aisle, int rack, int shelf);
 

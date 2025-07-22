@@ -14,7 +14,7 @@ public:
     databaseManager();
     void addPart(const Part & part);
     QList<Part> getAllParts() const;
-    void updatePart (const Part & part);
+    void updatePart (const Part & part, const QString &changeDescription);
     void deletePart (int id);
     std::optional<Part> getPartByCatalogNumber (const QString & catalogNumber) const;
     QList<QPointF> getQuantityHistoryForPart(int partId) const;
@@ -23,7 +23,7 @@ private:
     void openDatabase();
     void createTables();
     QSqlDatabase m_db;
-    void logQuantityChange (int partId, int newQuantity, const QString &description);
+    void logQuantityChange (int partId, int newQuantity, const QString &changedescription);
 };
 
 #endif // DATABASEMANAGER_H

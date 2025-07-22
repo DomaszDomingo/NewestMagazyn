@@ -41,6 +41,6 @@ private slots:
     void on_editButton_clicked();
     void on_deleteButton_clicked();
     void onPartSelectionChanged(const QItemSelection & selected, const QItemSelection &deselected);
-
+    void on_issueButton_clicked();
 };
 #endif // MAINWINDOW_H

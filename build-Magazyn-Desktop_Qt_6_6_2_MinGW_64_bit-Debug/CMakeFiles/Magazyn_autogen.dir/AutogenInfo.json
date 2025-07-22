@@ -376,6 +376,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_issuepartdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
@@ -490,6 +496,11 @@
 		],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.cpp",
 			"MU",
 			null
 		],

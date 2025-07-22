@@ -19,58 +19,69 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>504</width>
-      <height>434</height>
+      <width>592</width>
+      <height>436</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QPushButton" name="addButton">
-           <property name="text">
-            <string>Dodaj</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="addButton">
+             <property name="text">
+              <string>Dodaj</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editButton">
+             <property name="text">
+              <string>Edytuj</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteButton">
+             <property name="text">
+              <string>Usuń</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="editButton">
-           <property name="text">
-            <string>Edytuj</string>
+          <widget class="QTableView" name="partsTableView">
+           <property name="minimumSize">
+            <size>
+             <width>500</width>
+             <height>200</height>
+            </size>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="deleteButton">
-           <property name="text">
-            <string>Usuń</string>
+           <property name="baseSize">
+            <size>
+             <width>3</width>
+             <height>0</height>
+            </size>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <widget class="QTableView" name="partsTableView">
-         <property name="minimumSize">
-          <size>
-           <width>500</width>
-           <height>200</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>3</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
+        <widget class="QChartView" name="quantityChartView"/>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QChartView" name="quantityChartView"/>
+      <widget class="QPushButton" name="issueButton">
+       <property name="text">
+        <string>Wydaj</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -85,7 +96,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>

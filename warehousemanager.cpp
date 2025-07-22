@@ -60,6 +60,11 @@ void WarehouseManager::refreshData()
     endResetModel();
 }
 
+QList<Part> WarehouseManager::getAllParts() const
+{
+    return m_parts;
+}
+
 int WarehouseManager::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())

@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include "addpartdialog.h"
 #include "editpartdialog.h"
+#include "issuepartdialog.h"
 
 MainWindow::MainWindow (QWidget *parent)
     : QMainWindow(parent)
@@ -62,7 +63,7 @@ void MainWindow::on_addButton_clicked()
         // część istnieje. Zaktualizuj w bazie
         Part existingPart = *existingPartOpt;
         existingPart.setQuantity(existingPart.quantity() + partFromDialog.quantity());
-        m_dbManager.updatePart(existingPart);
+        m_dbManager.updatePart(existingPart, "Przyjęcie (aktualizacja ilości))");
         QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takim numerze katalogowym istnieje. Zaktualizowano ilość");
 
     } else {
@@ -92,7 +93,7 @@ void MainWindow::on_editButton_clicked()
         // zleć aktualizację modelu
         m_warehouseManager->updatePart(updatedPart);
         //zleć aktualizację w bazie danych
-        m_dbManager.updatePart(updatedPart);
+        m_dbManager.updatePart(updatedPart, "Edycja danych części");
     }
 }
 
@@ -154,4 +155,56 @@ void MainWindow::onPartSelectionChanged(const QItemSelection &selected, const QI
         qobject_cast<QDateTimeAxis * > (m_chart->axes(Qt::Horizontal).first())->setRange(minDate,maxDate);
         qobject_cast<QValueAxis * > (m_chart->axes(Qt::Vertical).first())->setRange(minQty - 1, maxQty +1);
     }
+}
+
+void MainWindow::on_issueButton_clicked()
+{
+    //Pobierz wszystkie części z modelu
+    QList<Part> allParts = m_warehouseManager->getAllParts();
+    if(allParts.isEmpty()){
+        QMessageBox::information(this, "Brak mageriałów", "Magazyn jest pusty.");
+        return;
+    }
+
+    //Otwarcie okna dialogowego i przekazanie listy części
+    IssuePartDialog dialog (allParts, this);
+    if(dialog.exec() != QDialog::Accepted){
+        return; //anulowano
+    }
+
+    //Pobranie z dialogu (ID Cześci i ilość)
+    auto issueDataOpt = dialog.getIssueData();
+    if (!issueDataOpt.has_value()){
+        return; // nie udało się pobrać danych
+    }
+
+    IssueData data = *issueDataOpt;
+
+    Part partToUpdate;
+
+    bool found = false;
+
+    for(const auto &part : allParts){
+        if(part.id() == data.partId){
+            partToUpdate = part;
+            found = true;
+            break;
+        }
+    }
+
+    if(!found || data.quantity <= 0){
+        return; // bład lub zerowa ilość
+    }
+
+    //aktualizacja ilośći i zapis zmian
+
+    partToUpdate.setQuantity(partToUpdate.quantity() - data.quantity);
+
+    m_dbManager.updatePart(partToUpdate, "Wydanie materiału");
+    m_warehouseManager->updatePart(partToUpdate);
+
+
+
+
+
 }
