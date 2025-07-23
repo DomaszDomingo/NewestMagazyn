@@ -7,6 +7,13 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <optional>
+#include <QDateTime>
+
+struct HistoryEntry{
+    QDateTime date;
+    QString description;
+    int quantityAfterChange;
+};
 
 class databaseManager
 {
@@ -18,6 +25,7 @@ public:
     void deletePart (int id);
     std::optional<Part> getPartByCatalogNumber (const QString & catalogNumber) const;
     QList<QPointF> getQuantityHistoryForPart(int partId) const;
+    QList <HistoryEntry> getDetailedHistoryForPart (int partId) const;
 
 private:
     void openDatabase();

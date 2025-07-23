@@ -162,6 +162,30 @@ QList<QPointF> databaseManager::getQuantityHistoryForPart(int partId) const
     return history;
 }
 
+QList<HistoryEntry> databaseManager::getDetailedHistoryForPart(int partId) const
+{
+    QList <HistoryEntry> history;
+    QSqlQuery query (m_db);
+    query.prepare("SELECT change_date, change_description, quantity_after_change FROM QuantityHistory "
+                   "WHERE part_id = :part_id ORDER BY change_date DESC"); // sortowanie od najnowszych
+
+    query.bindValue(":part_id", partId);
+
+    if(!query.exec()){
+        qDebug() << "Bład pobierania szczegółowej historii: " << query.lastError();
+        return history;
+    }
+
+    while (query.next()){
+        HistoryEntry entry;
+        entry.date = QDateTime::fromString(query.value(0).toString(),Qt::ISODate);
+        entry.description = query.value(1).toString();
+        entry.quantityAfterChange = query.value(2).toInt();
+        history.append(entry);
+
+    }
+    return history;
+}
 
 void databaseManager::openDatabase()
 {

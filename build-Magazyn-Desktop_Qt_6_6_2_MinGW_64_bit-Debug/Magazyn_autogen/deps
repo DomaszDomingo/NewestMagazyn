@@ -22,6 +22,7 @@ Magazyn_autogen/timestamp: \
 	C:/Qt/6.6.2/mingw_64/include/QtCharts/qvalueaxis.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCharts/qxyseries.h \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/QAbstractTableModel \
+	C:/Qt/6.6.2/mingw_64/include/QtCore/QDateTime \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/QDir \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/QItemSelection \
 	C:/Qt/6.6.2/mingw_64/include/QtCore/QList \
@@ -720,6 +721,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/databasemanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp \
@@ -733,6 +736,7 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.ui \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.ui \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

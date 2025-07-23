@@ -10,7 +10,7 @@
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QValueAxis>
 #include <QItemSelection>
-
+#include "historydialog.h"
 //QT_CHARTS_USE_NAMESPACE
 
 QT_BEGIN_NAMESPACE
@@ -42,5 +42,7 @@ private slots:
     void on_deleteButton_clicked();
     void onPartSelectionChanged(const QItemSelection & selected, const QItemSelection &deselected);
     void on_issueButton_clicked();
+    void on_historyButton_clicked();
+
 };
 #endif // MAINWINDOW_H

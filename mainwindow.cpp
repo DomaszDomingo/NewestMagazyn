@@ -12,6 +12,7 @@ MainWindow::MainWindow (QWidget *parent)
 {
     ui->setupUi(this);
 
+    setWindowTitle("Magazinierix2000");
     m_warehouseManager = new WarehouseManager(m_dbManager, this);
     ui->partsTableView->setModel(m_warehouseManager);
     ui->partsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -63,7 +64,7 @@ void MainWindow::on_addButton_clicked()
         // część istnieje. Zaktualizuj w bazie
         Part existingPart = *existingPartOpt;
         existingPart.setQuantity(existingPart.quantity() + partFromDialog.quantity());
-        m_dbManager.updatePart(existingPart, "Przyjęcie (aktualizacja ilości))");
+        m_dbManager.updatePart(existingPart, "Przyjęcie (aktualizacja ilości)");
         QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takim numerze katalogowym istnieje. Zaktualizowano ilość");
 
     } else {
@@ -153,8 +154,12 @@ void MainWindow::onPartSelectionChanged(const QItemSelection &selected, const QI
         }
 
         qobject_cast<QDateTimeAxis * > (m_chart->axes(Qt::Horizontal).first())->setRange(minDate,maxDate);
-        qobject_cast<QValueAxis * > (m_chart->axes(Qt::Vertical).first())->setRange(minQty - 1, maxQty +1);
-    }
+        auto * axisY = qobject_cast<QValueAxis*> (m_chart->axes(Qt::Vertical).first());
+        axisY->setRange(minQty , maxQty);
+        axisY->setTickCount(3);
+
+
+            }
 }
 
 void MainWindow::on_issueButton_clicked()
@@ -208,3 +213,73 @@ void MainWindow::on_issueButton_clicked()
 
 
 }
+
+void MainWindow::on_historyButton_clicked()
+{
+//Sprawdzenie czy coś jest zaznaczone
+    const QModelIndex currentIndex = ui->partsTableView->selectionModel()->currentIndex();
+
+    if (!currentIndex.isValid()){
+        QMessageBox::warning(this, "Brak zaznaczenia" , "Proszę najpierw zaznaczyć część, aby zobaczyc historię." );
+        return;
+    }
+    Part selectedPart = m_warehouseManager->getPartAtIndex(currentIndex);
+    //Pobranie szegółowej historii z bazy danych
+    QList<HistoryEntry> history = m_dbManager.getDetailedHistoryForPart(selectedPart.id());
+
+    if (history.isEmpty()){
+        QMessageBox::information(this, "Brak historii" , "Brak zapisanej historii dla tej części.");
+        return;
+    }
+
+    //UtwóRz i wyświetl okno dialogowe
+
+    HistoryDialog dialog (selectedPart.name(),history,this);
+    dialog.exec();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

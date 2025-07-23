@@ -376,6 +376,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.h",
+			"MU",
+			"EWIEGA46WW/moc_historydialog.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.h",
 			"MU",
 			"EWIEGA46WW/moc_issuepartdialog.cpp",
@@ -496,6 +502,11 @@
 		],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.cpp",
 			"MU",
 			null
 		],
