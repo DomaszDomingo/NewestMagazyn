@@ -14,7 +14,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -35,12 +34,6 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *catalogNumberLabel;
     QLineEdit *catalogNumberLineEdit;
-    QHBoxLayout *horizontalLayout_4;
-    QLabel *quantityLabel;
-    QSpinBox *quantitySpinBox;
-    QHBoxLayout *horizontalLayout_5;
-    QLabel *priceLabel;
-    QDoubleSpinBox *priceDoubleSpinBox;
     QHBoxLayout *horizontalLayout_7;
     QLabel *locationLabel;
     QSpacerItem *horizontalSpacer;
@@ -106,38 +99,6 @@ public:
 
 
         verticalLayout_4->addLayout(horizontalLayout_2);
-
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName("horizontalLayout_4");
-        quantityLabel = new QLabel(EditPartDialog);
-        quantityLabel->setObjectName("quantityLabel");
-
-        horizontalLayout_4->addWidget(quantityLabel);
-
-        quantitySpinBox = new QSpinBox(EditPartDialog);
-        quantitySpinBox->setObjectName("quantitySpinBox");
-        quantitySpinBox->setMaximum(500);
-
-        horizontalLayout_4->addWidget(quantitySpinBox);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_4);
-
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName("horizontalLayout_5");
-        priceLabel = new QLabel(EditPartDialog);
-        priceLabel->setObjectName("priceLabel");
-
-        horizontalLayout_5->addWidget(priceLabel);
-
-        priceDoubleSpinBox = new QDoubleSpinBox(EditPartDialog);
-        priceDoubleSpinBox->setObjectName("priceDoubleSpinBox");
-        priceDoubleSpinBox->setMaximum(99999999.989999994635582);
-
-        horizontalLayout_5->addWidget(priceDoubleSpinBox);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_5);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName("horizontalLayout_7");
@@ -238,8 +199,6 @@ public:
         windowNameLabel->setText(QCoreApplication::translate("EditPartDialog", "EDYCJA", nullptr));
         nameLabel->setText(QCoreApplication::translate("EditPartDialog", "Nazwa cz\304\231\305\233ci:", nullptr));
         catalogNumberLabel->setText(QCoreApplication::translate("EditPartDialog", "Numer Katalogowy:", nullptr));
-        quantityLabel->setText(QCoreApplication::translate("EditPartDialog", "Ilo\305\233\304\207:", nullptr));
-        priceLabel->setText(QCoreApplication::translate("EditPartDialog", "Cena:", nullptr));
         locationLabel->setText(QCoreApplication::translate("EditPartDialog", "Lokalizacja", nullptr));
         aisleLabel->setText(QCoreApplication::translate("EditPartDialog", "Alejka", nullptr));
         rackLabel->setText(QCoreApplication::translate("EditPartDialog", "Rega\305\202", nullptr));

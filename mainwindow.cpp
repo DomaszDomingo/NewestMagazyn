@@ -54,23 +54,18 @@ void MainWindow::on_addButton_clicked()
 {
     addPartDialog dialog (this);
     if (dialog.exec() != QDialog::Accepted){
-        return; // Użytkownik anulował. Wyjście z funkcji
+        return; // użytkownik anulował
     }
-
     Part partFromDialog = dialog.getPartData();
-    auto existingPartOpt = m_dbManager.getPartByCatalogNumber(partFromDialog.catalogNumber());
 
-    if (existingPartOpt.has_value()){
-        // część istnieje. Zaktualizuj w bazie
-        Part existingPart = *existingPartOpt;
-        existingPart.setQuantity(existingPart.quantity() + partFromDialog.quantity());
-        m_dbManager.updatePart(existingPart, "Przyjęcie (aktualizacja ilości)");
-        QMessageBox::information(this, "Aktualizacja ilości", "Materiał o takim numerze katalogowym istnieje. Zaktualizowano ilość");
+    //sprawdz czy główny rekord dla tej czesci juz istnieje
+    //jeśli nie, stworz go i pobierz jego id. Jeśli tak pobierz jego id
+    int partId = m_dbManager.getOrCreatePart(partFromDialog);
 
-    } else {
-        //część nie istnieje dodaj do bazy
-        m_dbManager.addPart(partFromDialog);
-    }
+    //dodaj nową partię do tabeli PartBatches używając ID
+
+    m_dbManager.addBatch(partId, partFromDialog.quantity(),partFromDialog.price());
+
 
     m_warehouseManager->refreshData();
 }
@@ -185,32 +180,22 @@ void MainWindow::on_issueButton_clicked()
 
     IssueData data = *issueDataOpt;
 
-    Part partToUpdate;
+    QString mode = ui->issueModeComboBox->currentText();
+    bool success = false;
 
-    bool found = false;
-
-    for(const auto &part : allParts){
-        if(part.id() == data.partId){
-            partToUpdate = part;
-            found = true;
-            break;
-        }
+    if(mode == "FIFO"){
+        success = m_dbManager.issuePartFIFO(data.partId,data.quantity);
+    } else { // LIFO
+        success = m_dbManager.issuePartLIFO(data.partId,data.quantity);
     }
 
-    if(!found || data.quantity <= 0){
-        return; // bład lub zerowa ilość
+    if (success){
+        QMessageBox::information(this, "Sukces", "Materiał został wydany pomyślnie");
+    } else {
+        QMessageBox::warning(this, "Błąd", "Wydanie materiału nie powiodło się. Sprawdź czy na stanie jest wystarczająca ilość");
     }
 
-    //aktualizacja ilośći i zapis zmian
-
-    partToUpdate.setQuantity(partToUpdate.quantity() - data.quantity);
-
-    m_dbManager.updatePart(partToUpdate, "Wydanie materiału");
-    m_warehouseManager->updatePart(partToUpdate);
-
-
-
-
+    m_warehouseManager->refreshData();
 
 }
 

@@ -19,7 +19,12 @@ class databaseManager
 {
 public:
     databaseManager();
-    void addPart(const Part & part);
+    int getOrCreatePart (const Part & partData);//zwraca id częsci
+    void addBatch(int partId, int quantity, double price); //dodaje partię
+
+    bool issuePartLIFO(int partId, int quantityToIssue);        //wydawanie LIFO
+    bool issuePartFIFO(int partId, int quantityToIssue);        //wydawanie FIFO
+
     QList<Part> getAllParts() const;
     void updatePart (const Part & part, const QString &changeDescription);
     void deletePart (int id);

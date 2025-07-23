@@ -13,78 +13,259 @@ databaseManager::databaseManager() {
     createTables();
 }
 
-void databaseManager::addPart(const Part &part)
+// Plik: databasemanager.cpp
+int databaseManager::getOrCreatePart(const Part &partData)
 {
-    QSqlQuery query (m_db);
-    query.prepare("INSERT INTO Parts (name, catalogNumber, quantity, price, locationAisle, locationRack, locationShelf) "
-                  "VALUES (:name, :catalogNumber, :quantity, :price, :locationAisle, :locationRack, :locationShelf)");
+    qDebug() << "Rozpoczynam getOrCreatePart dla numeru:" << partData.catalogNumber();
+    auto existingPart = getPartByCatalogNumber(partData.catalogNumber());
+    if (existingPart.has_value()) {
+        qDebug() << "Część już istnieje. Zwracam ID:" << existingPart->id();
+        return existingPart->id();
+    }
 
-    query.bindValue(":name", part.name());
-    query.bindValue(":catalogNumber", part.catalogNumber());
-    query.bindValue(":quantity", part.quantity());
-    query.bindValue(":price",part.price());
-    query.bindValue(":locationAisle",part.location().aisle());
-    query.bindValue(":locationRack",part.location().rack());
-    query.bindValue(":locationShelf",part.location().shelf());
+    qDebug() << " Część nie istnieje. Próbuję stworzyć nowy rekord.";
+    QSqlQuery query(m_db);
+    query.prepare("INSERT INTO Parts (name, catalogNumber, locationAisle, locationRack, locationShelf) "
+                  "VALUES (:name, :catalogNumber, :locationAisle, :locationRack, :locationShelf)");
+
+        query.bindValue(":name", partData.name());
+    query.bindValue(":catalogNumber", partData.catalogNumber());
+    query.bindValue(":locationAisle", partData.location().aisle());
+    query.bindValue(":locationRack", partData.location().rack());
+    query.bindValue(":locationShelf", partData.location().shelf());
+    qDebug() << "Przygotowano zapytanie INSERT z danymi:" << partData.name() << partData.catalogNumber();
+
+    // Diagnostyka
+    if (query.exec()) {
+        int newId = query.lastInsertId().toInt();
+        qDebug() << "Dodano nową część. Nowe ID to:" << newId;
+        return newId;
+    } else {
+        qDebug() << "Nie można wykonać zapytania INSERT.";
+        qDebug() << "Błąd bazy danych:" << query.lastError().text();
+        return -1; // Zwróć -1, aby zasygnalizować błąd
+    }
+}
+
+void databaseManager::addBatch(int partId, int quantity, double price){
+    QSqlQuery query(m_db);
+    query.prepare("INSERT INTO PartBatches (part_id, quantity, price_per_item, arrival_date) "
+                                          "VALUES (:part_id, :quantity, :price, :date)");
+
+    query.bindValue(":part_id",partId);
+    query.bindValue(":quantity", quantity);
+    query.bindValue(":price", price);
+    query.bindValue(":date", QDateTime::currentDateTime().toString(Qt::ISODate));
 
     if(!query.exec()){
-        qDebug() << "Błąd dodawania części" << query.lastError();
-    } else {
-        qDebug() <<"Funkcja addPart wykonana pomyślnie. Ilość dodanych rekordów:" << query.numRowsAffected();
+        qDebug() << "Błąd dodawania nowej partii: " << query.lastError();
+        return;
     }
-    int newPartId = query.lastInsertId().toInt();
-    logQuantityChange(newPartId, part.quantity(), "Utworzenie nowej części");
 
+    QSqlQuery sumQuery(m_db);
+    sumQuery.prepare("SELECT SUM(quantity) FROM PartBatches WHERE part_id = :id");
+    sumQuery.bindValue(":id", partId);
+    if (sumQuery.exec() && sumQuery.next()) {
+        int newTotalQuantity = sumQuery.value(0).toInt();
+        logQuantityChange(partId,newTotalQuantity, "Przyjęcie nowej partii");
+    }
+}
+
+
+
+bool databaseManager::issuePartLIFO(int partId, int quantityToIssue){
+
+    if(!m_db.transaction()){ // Rozpocznij transakcję, aby wszystkie operacje były traktowane jako jedna całość.
+        qDebug() << "Błąd rozpoczęcia transakcji:" << m_db.lastError();
+        return false;
+    }
+
+    QSqlQuery query (m_db);
+    query.prepare("SELECT id, quantity FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date DESC");
+    query.bindValue(":part_id",partId);
+
+    //Sprawdzenie czy zapytanie zostało wykonane
+    if(!query.exec()){
+        qDebug() << "Błąd pobierania partii dla LIFO:" << query.lastError();
+        m_db.rollback(); // wycofaj transakcję w razie błędu
+        return false;
+    }
+
+    int remainingToIssue = quantityToIssue;
+
+    while (query.next() && remainingToIssue > 0){
+        int batchId = query.value(0).toInt();
+        int batchQuantity = query.value(1).toInt();
+        int quantityFromThisBatch = qMin(remainingToIssue,batchQuantity);
+
+        QSqlQuery updateQuery (m_db);
+        if(batchQuantity > quantityFromThisBatch ){
+            //jeśli partia nie zostanie wyczerpana, aktualizuj jej ilość
+            updateQuery.prepare("UPDATE PartBatches SET quantity = quantity - :issued WHERE id = :id");
+        } else {
+            //jeśli partia zostanie wyczerpana, usun ją
+            updateQuery.prepare("DELETE FROM PartBatches WHERE id = :id");
+        }
+
+        updateQuery.bindValue(":issued", quantityFromThisBatch);
+        updateQuery.bindValue(":id", batchId);
+
+        if(!updateQuery.exec()){
+            m_db.rollback();
+            return false;
+        }
+        remainingToIssue -= quantityFromThisBatch;
+    }
+    //Sprawdz czy udało sie wydać ządaną ilosć.
+    if(remainingToIssue > 0){   // nie udało się wydać wszystkiego
+        qDebug() << "Nie udało się wydać całości - brak wystarczającej ilości na stanie.";
+        m_db.rollback();
+        return false;
+    }
+
+    //jesli wszystko ok, zaloguj zmiane i zatwierdz transakcję
+    QList<Part> allParts = getAllParts();
+    int newTotalQuantity = 0;
+    for (const Part &p : allParts){
+        if(p.id() == partId){
+            newTotalQuantity = p.quantity();
+            break; // znaleziono częśc, mozna przerwać pętlę
+        }
+    }
+
+    logQuantityChange(partId,newTotalQuantity, "Wydanie LIFO");
+    return m_db.commit(); //zatwierdz transakcję
+}
+
+
+bool databaseManager::issuePartFIFO(int partId, int quantityToIssue){
+
+    if(!m_db.transaction()){ // Rozpocznij transakcję, aby wszystkie operacje były traktowane jako jedna całość.
+        qDebug() << "Błąd rozpoczęcia transakcji:" << m_db.lastError();
+        return false;
+    }
+
+    QSqlQuery query (m_db);
+    query.prepare("SELECT id, quantity FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date ASC");
+    query.bindValue(":part_id",partId);
+
+    //Sprawdzenie czy zapytanie zostało wykonane
+    if(!query.exec()){
+        qDebug() << "Błąd pobierania partii dla LIFO:" << query.lastError();
+        m_db.rollback(); // wycofaj transakcję w razie błędu
+        return false;
+    }
+
+    int remainingToIssue = quantityToIssue;
+
+    while (query.next() && remainingToIssue > 0){
+        int batchId = query.value(0).toInt();
+        int batchQuantity = query.value(1).toInt();
+        int quantityFromThisBatch = qMin(remainingToIssue,batchQuantity);
+
+        QSqlQuery updateQuery (m_db);
+        if(batchQuantity > quantityFromThisBatch ){
+            //jeśli partia nie zostanie wyczerpana, aktualizuj jej ilość
+            updateQuery.prepare("UPDATE PartBatches SET quantity = quantity - :issued WHERE id = :id");
+        } else {
+            //jeśli partia zostanie wyczerpana, usun ją
+            updateQuery.prepare("DELETE FROM PartBatches WHERE id = :id");
+        }
+
+        updateQuery.bindValue(":issued", quantityFromThisBatch);
+        updateQuery.bindValue(":id", batchId);
+
+        if(!updateQuery.exec()){
+            m_db.rollback();
+            return false;
+        }
+        remainingToIssue -= quantityFromThisBatch;
+    }
+    //Sprawdz czy udało sie wydać ządaną ilosć.
+    if(remainingToIssue > 0){   // nie udało się wydać wszystkiego
+        qDebug() << "Nie udało się wydać całości - brak wystarczającej ilości na stanie.";
+        m_db.rollback();
+        return false;
+    }
+
+    //jesli wszystko ok, zaloguj zmiane i zatwierdz transakcję
+    QList<Part> allParts = getAllParts();
+    int newTotalQuantity = 0;
+    for (const Part &p : allParts){
+        if(p.id() == partId){
+            newTotalQuantity = p.quantity();
+            break; // znaleziono częśc, mozna przerwać pętlę
+        }
+    }
+
+    logQuantityChange(partId,newTotalQuantity, "Wydanie LIFO");
+    return m_db.commit(); //zatwierdz transakcję
 }
 
 QList<Part> databaseManager::getAllParts() const
 {
-    qDebug() << "Wywołanie getAllParts";
-
     QList<Part> parts;
-    QSqlQuery query ("SELECT * FROM Parts", m_db);
 
-    if(!query.exec()){
-        qDebug() << "Błąd pobrania wszystkich części" << query.lastError();
+    // Zapytanie, które łączy Parts z sumą ilości z PartBatches
+    QSqlQuery mainQuery("SELECT p.id, p.name, p.catalogNumber, p.locationAisle, p.locationRack, p.locationShelf, "
+                        "COALESCE(SUM(b.quantity), 0) as total_quantity "
+                        "FROM Parts p LEFT JOIN PartBatches b ON p.id = b.part_id "
+                        "GROUP BY p.id", m_db);
+
+    if (!mainQuery.exec()) {
+        qDebug() << "Błąd pobierania wszystkich części:" << mainQuery.lastError();
+        return parts;
     }
 
-    while (query.next()){
+    while (mainQuery.next()) {
         Part part;
-        part.setId(query.value("id").toInt());
-        part.setName(query.value("name").toString());
-        part.setCatalogNumber(query.value("catalogNumber").toString());
-        part.setQuantity(query.value("quantity").toInt());
-        part.setPrice(query.value("price").toDouble());
+        int currentPartId = mainQuery.value("id").toInt();
+        part.setId(currentPartId);
 
-        Location location (
-            query.value("locationAisle").toString(),
-            query.value("locationRack").toInt(),
-            query.value("locationShelf").toInt());
+        part.setId(mainQuery.value("id").toInt());
+        part.setName(mainQuery.value("name").toString());
+        part.setCatalogNumber(mainQuery.value("catalogNumber").toString());
 
+        Location location(
+            mainQuery.value("locationAisle").toString(),
+            mainQuery.value("locationRack").toInt(),
+            mainQuery.value("locationShelf").toInt()
+            );
         part.setLocation(location);
+
+        part.setQuantity(mainQuery.value("total_quantity").toInt());
+
+
+        //dodatkowe zapytanie o cene, bo bez tego nie działało
+        QSqlQuery priceQuery(m_db);
+        priceQuery.prepare("SELECT price_per_item FROM PartBatches "
+                           "WHERE part_id = :id ORDER BY arrival_date DESC LIMIT 1");
+        priceQuery.bindValue(":id", currentPartId);
+        if (priceQuery.exec() && priceQuery.next()) {
+            part.setPrice(priceQuery.value(0).toDouble());
+        } else {
+            part.setPrice(0.0); // Ustaw cenę na 0, jeśli nie ma żadnych partii
+        }
 
         parts.append(part);
     }
-
-    qDebug() << "getAllParts zakończona. Znaleziono" << parts.count() << "części w bazie.";
     return parts;
 }
 
 void databaseManager::updatePart(const Part &part, const QString &changeDescription)
 {
     QSqlQuery query (m_db);
-    query.prepare("UPDATE Parts SET name = :name, catalogNumber = :catalogNumber, quantity = :quantity, "
-                  "price = :price, locationAisle = :locationAisle, locationRack = :locationRack, "
-                  "locationShelf = :locationShelf WHERE id = :id");
+    query.prepare("UPDATE Parts SET name = :name, catalogNumber = :catalogNumber, locationAisle = :locationAisle, "
+                  "locationRack = :locationRack, locationShelf = :locationShelf WHERE id = :id");
 
+    // Bindowanie tylko istniejących danych
     query.bindValue(":name", part.name());
     query.bindValue(":catalogNumber", part.catalogNumber());
-    query.bindValue(":quantity", part.quantity());
-    query.bindValue(":price", part.price());
     query.bindValue(":locationAisle", part.location().aisle());
     query.bindValue(":locationRack", part.location().rack());
     query.bindValue(":locationShelf", part.location().shelf());
     query.bindValue(":id", part.id());
+
 
     if (!query.exec()) {
         qDebug() << "Błąd aktualizacji części:" << query.lastError();
@@ -108,7 +289,8 @@ void databaseManager::deletePart(int id)
 std::optional<Part> databaseManager::getPartByCatalogNumber(const QString &catalogNumber) const
 {
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM Parts WHERE catalogNumber = :catalogNumber");
+    query.prepare("SELECT id, name, catalogNumber, locationAisle, locationRack, locationShelf "
+                  "FROM Parts WHERE catalogNumber = :catalogNumber");
     query.bindValue(":catalogNumber", catalogNumber);
 
     if(!query.exec()){
@@ -122,8 +304,6 @@ std::optional<Part> databaseManager::getPartByCatalogNumber(const QString &catal
         part.setId(query.value("id").toInt());
         part.setName(query.value("name").toString());
         part.setCatalogNumber(query.value("catalogNumber").toString());
-        part.setQuantity(query.value("quantity").toInt());
-        part.setPrice(query.value("price").toDouble());
 
         Location location (
             query.value("locationAisle").toString(),
@@ -218,23 +398,30 @@ void databaseManager::openDatabase()
 
 void databaseManager::createTables()
 {
-    QString createQuery = "CREATE TABLE IF NOT EXISTS Parts ("
-                          "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                          "name TEXT NOT NULL, "
-                          "catalogNumber TEXT NOT NULL UNIQUE, "
-                          "quantity INTEGER NOT NULL, "
-                          "price REAL NOT NULL, "
-                          "locationAisle TEXT, "
-                          "locationRack INTEGER, "
-                          "locationShelf INTEGER"
-                          ");";
+    QSqlQuery query(m_db);
 
-    QSqlQuery query (m_db);
+    // Krok 1: Migracja (jeśli tabela 'Parts_old' jeszcze nie istnieje, co oznacza, że migracja nie była robiona)
+    query.exec("ALTER TABLE Parts RENAME TO Parts_old;");
 
-    if(!query.exec(createQuery)){
-        qDebug() << "Nie można utworzyć tabeli 'Parts':" << query.lastError();
-    }else{
-        qDebug() << "Tabela 'Parts' została utworzona lub już istnieje.";
+    // Krok 2: Tworzenie tabel z klauzulą IF NOT EXISTS
+    QString createPartsQuery = "CREATE TABLE IF NOT EXISTS Parts ("
+                               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                               "name TEXT NOT NULL, "
+                               "catalogNumber TEXT NOT NULL UNIQUE, "
+                               "locationAisle TEXT, locationRack INTEGER, locationShelf INTEGER);";
+    if(!query.exec(createPartsQuery)){
+        qDebug() << "Błąd Tworzenia tabeli Parts:" << query.lastError();
+    }
+
+    QString createBatchesQuery = "CREATE TABLE IF NOT EXISTS PartBatches ("
+                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                 "part_id INTEGER NOT NULL, "
+                                 "quantity INTEGER NOT NULL, "
+                                 "price_per_item REAL NOT NULL, " // Zmieniono na REAL
+                                 "arrival_date TEXT NOT NULL, "
+                                 "FOREIGN KEY (part_id) REFERENCES Parts(id) ON DELETE CASCADE);"; // Poprawiono part_id
+    if (!query.exec(createBatchesQuery)){
+        qDebug() << "Błąd tworzenia tabeli PartBatches: " << query.lastError();
     }
 
     QString createHistoryQuery = "CREATE TABLE IF NOT EXISTS QuantityHistory ("
@@ -252,6 +439,7 @@ void databaseManager::createTables()
         qDebug() << "Tabela 'QuantityHistory' została utworzona lub już istnieje. ";
     }
 }
+
 
 void databaseManager::logQuantityChange(int partId, int newQuantity, const QString &description)
 {
