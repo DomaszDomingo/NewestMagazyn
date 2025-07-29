@@ -21,6 +21,9 @@ public:
     databaseManager();
     int getOrCreatePart (const Part & partData);//zwraca id częsci
     void addBatch(int partId, int quantity, double price); //dodaje partię
+    bool addLocation (const Location & location);
+    QList<Location> getAllLocations() const;
+    bool deleteLocation (int LocationId);
 
     bool issuePartLIFO(int partId, int quantityToIssue);        //wydawanie LIFO
     bool issuePartFIFO(int partId, int quantityToIssue);        //wydawanie FIFO

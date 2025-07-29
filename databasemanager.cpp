@@ -71,6 +71,47 @@ void databaseManager::addBatch(int partId, int quantity, double price){
     }
 }
 
+bool databaseManager::addLocation(const Location &location)
+{
+    QSqlQuery query (m_db);
+    query.prepare("INSERT INTO Locations (aisle, rack, shelf) VALUES (:aisle, :rack, :shelf)");
+    query.bindValue(":aisle", location.aisle());
+    query.bindValue(":rack", location.rack());
+    query.bindValue(":shelf", location.shelf());
+
+    if(!query.exec()){
+        qDebug () << "Bład dodawania lokalizacji:" << query.lastError();
+        return false;
+    }
+    return true;
+}
+
+QList<Location> databaseManager::getAllLocations() const
+{
+    QList<Location> locations;
+    QSqlQuery query ("SELECT id, aisle, rack, shelf FROM Locations ORDER BY aisle, rack, shelf",m_db);
+    while (query.next()){
+        Location loc (query.value("aisle").toString(),
+                     query.value("rack").toInt(),
+                     query.value("shelf").toInt());
+        loc.setId(query.value("id").toInt());
+        locations.append(loc);
+    }
+    return locations;
+}
+
+bool databaseManager::deleteLocation(int LocationId)
+{
+    QSqlQuery query (m_db);
+    query.prepare("DELETE FROM Locations WHERE id = :id");
+    query.bindValue(":id", LocationId);
+    if (!query.exec()){
+        qDebug() << "Błąd usuwania lokalizacji:" << query.lastError();
+        return false;
+    }
+    return true;
+}
+
 
 
 bool databaseManager::issuePartLIFO(int partId, int quantityToIssue){
@@ -436,7 +477,7 @@ void databaseManager::createTables()
 {
     QSqlQuery query(m_db);
 
-    // Krok 1: Migracja (jeśli tabela 'Parts_old' jeszcze nie istnieje, co oznacza, że migracja nie była robiona)
+    // Migracja (jeśli tabela 'Parts_old' jeszcze nie istnieje, co oznacza, że migracja nie była robiona)
     query.exec("ALTER TABLE Parts RENAME TO Parts_old;");
 
     // Krok 2: Tworzenie tabel z klauzulą IF NOT EXISTS
@@ -473,6 +514,18 @@ void databaseManager::createTables()
         qDebug() << "Nie można utworzyć tabeli 'QuantityHistory':" << historyQuery.lastError();
     } else {
         qDebug() << "Tabela 'QuantityHistory' została utworzona lub już istnieje. ";
+    }
+
+    QString createLocationsQuery = "CREATE TABLE IF NOT EXISTS Locations ("
+                                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                   "aisle TEXT NOT NULL , "
+                                   "rack INTEGER NOT NULL, "
+                                   "shelf INTEGER NOT NULL, "
+                                   "UNIQUE (aisle, rack, shelf)" // zapobiega duplikatom
+                                   ");";
+
+    if (!query.exec(createBatchesQuery)){
+        qDebug() << "Błąd tworzenia tabeli locations:" << query.lastError();
     }
 }
 

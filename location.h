@@ -16,9 +16,11 @@ public:
     int rack () const;
     int shelf () const;
 
+    void setId (int id);
     void setAisle (const QString &aisle);
     void setRack (int rack);
     void setShelf (int shelf);
+
 
     QString toString () const;
 
@@ -26,6 +28,7 @@ private:
     QString m_aisle;
     int m_rack;
     int m_shelf;
+    int m_id;
 
 };
 
