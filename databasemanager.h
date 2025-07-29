@@ -36,7 +36,7 @@ private:
     void openDatabase();
     void createTables();
     QSqlDatabase m_db;
-    void logQuantityChange (int partId, int newQuantity, const QString &changedescription);
+    void logQuantityChange (int partId, int newQuantity, const QString &description);
 };
 
 #endif // DATABASEMANAGER_H

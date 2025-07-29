@@ -159,6 +159,7 @@ void MainWindow::onPartSelectionChanged(const QItemSelection &selected, const QI
 
 void MainWindow::on_issueButton_clicked()
 {
+
     //Pobierz wszystkie części z modelu
     QList<Part> allParts = m_warehouseManager->getAllParts();
     if(allParts.isEmpty()){
@@ -184,15 +185,15 @@ void MainWindow::on_issueButton_clicked()
     bool success = false;
 
     if(mode == "FIFO"){
-        success = m_dbManager.issuePartFIFO(data.partId,data.quantity);
+        success = m_dbManager.issuePartFIFO(data.partId, data.quantity);
     } else { // LIFO
-        success = m_dbManager.issuePartLIFO(data.partId,data.quantity);
+        success = m_dbManager.issuePartLIFO(data.partId, data.quantity);
     }
 
-    if (success){
-        QMessageBox::information(this, "Sukces", "Materiał został wydany pomyślnie");
+    if (success) {
+        QMessageBox::information(this, "Sukces", "Materiał został pomyślnie wydany.");
     } else {
-        QMessageBox::warning(this, "Błąd", "Wydanie materiału nie powiodło się. Sprawdź czy na stanie jest wystarczająca ilość");
+        QMessageBox::warning(this, "Błąd", "Wydanie materiału nie powiodło się. Sprawdź, czy na stanie jest wystarczająca ilość.");
     }
 
     m_warehouseManager->refreshData();

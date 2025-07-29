@@ -24,7 +24,7 @@ void HistoryDialog::setupTable(const QList<HistoryEntry> &history)
     ui->historyTableWidget->setColumnCount(3);
     ui->historyTableWidget->setHorizontalHeaderLabels({"Data","Operacja", "Ilość po zmianie"});
     ui->historyTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //blokada edycji
-    ui->historyTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->historyTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     // wypełnienie danymi
     ui->historyTableWidget->setRowCount(history.count());
@@ -32,7 +32,7 @@ void HistoryDialog::setupTable(const QList<HistoryEntry> &history)
         const auto & entry = history.at (row);
 
         //Tworzenie komórek tabeli
-        auto *dateItem = new QTableWidgetItem(entry.date.toString("dd.MM.yyy HH:mm:ss"));
+        auto *dateItem = new QTableWidgetItem(entry.date.toString("dd.MM.yyyy HH:mm:ss"));
         auto *descItem = new QTableWidgetItem(entry.description);
         auto *quantityItem = new QTableWidgetItem(QString::number((entry.quantityAfterChange)));
 
@@ -44,6 +44,9 @@ void HistoryDialog::setupTable(const QList<HistoryEntry> &history)
         ui->historyTableWidget->setItem(row, 0 , dateItem);
         ui->historyTableWidget->setItem(row, 1, descItem);
         ui->historyTableWidget->setItem(row, 2, quantityItem);
+        //dostosowanie wysokości wierszy do wypełnionej tabeli
+        ui->historyTableWidget->resizeRowsToContents();
+
 
     }
 }

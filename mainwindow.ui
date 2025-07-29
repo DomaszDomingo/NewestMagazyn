@@ -14,49 +14,70 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QTabWidget" name="TabWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>712</width>
-      <height>436</height>
+      <x>20</x>
+      <y>30</y>
+      <width>750</width>
+      <height>500</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="Materials">
+     <attribute name="title">
+      <string>Materiały</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>712</width>
+        <height>436</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
+          <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QPushButton" name="addButton">
-             <property name="text">
-              <string>Dodaj</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="editButton">
-             <property name="text">
-              <string>Edytuj</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="deleteButton">
-             <property name="text">
-              <string>Usuń</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="historyButton">
-             <property name="text">
-              <string>Historia</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="addButton">
+               <property name="text">
+                <string>Dodaj</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="editButton">
+               <property name="text">
+                <string>Edytuj</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="deleteButton">
+               <property name="text">
+                <string>Usuń</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="historyButton">
+               <property name="text">
+                <string>Historia</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -76,53 +97,15 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QChartView" name="quantityChartView"/>
+         </item>
         </layout>
        </item>
        <item>
-        <widget class="QChartView" name="quantityChartView"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="issueButton">
-         <property name="text">
-          <string>Wydaj</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QComboBox" name="issueModeComboBox">
-           <item>
-            <property name="text">
-             <string>FIFO</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>LIFO</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
+          <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -135,18 +118,94 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="issueModeLabel">
+          <widget class="QPushButton" name="issueButton">
            <property name="text">
-            <string>Wybierz tryb
+            <string>Wydaj</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QComboBox" name="issueModeComboBox">
+             <item>
+              <property name="text">
+               <string>FIFO</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>LIFO</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="issueModeLabel">
+             <property name="text">
+              <string>Wybierz tryb
  wydania</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Locations">
+     <attribute name="title">
+      <string>Lokalizacje</string>
+     </attribute>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>258</width>
+        <height>256</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QTableView" name="locationsTableView"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QPushButton" name="addLocationButton">
+           <property name="text">
+            <string>Dodaj</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="deleteLocationButton">
+           <property name="text">
+            <string>Usuń</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

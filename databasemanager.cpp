@@ -81,7 +81,7 @@ bool databaseManager::issuePartLIFO(int partId, int quantityToIssue){
     }
 
     QSqlQuery query (m_db);
-    query.prepare("SELECT id, quantity FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date DESC");
+    query.prepare("SELECT id, quantity, arrival_date FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date DESC");
     query.bindValue(":part_id",partId);
 
     //Sprawdzenie czy zapytanie zostało wykonane
@@ -92,22 +92,25 @@ bool databaseManager::issuePartLIFO(int partId, int quantityToIssue){
     }
 
     int remainingToIssue = quantityToIssue;
+    QStringList issueDetails;   // lista do przechowywania szczegółów wydania
 
     while (query.next() && remainingToIssue > 0){
         int batchId = query.value(0).toInt();
         int batchQuantity = query.value(1).toInt();
+        QDateTime arrivalDate = QDateTime::fromString(query.value(2).toString(), Qt::ISODate);
         int quantityFromThisBatch = qMin(remainingToIssue,batchQuantity);
+        issueDetails.append(QString(" - %1 szt. (partia z %2)").arg(quantityFromThisBatch).arg(arrivalDate.toString("dd.MM.yyyy HH:mm")));
 
         QSqlQuery updateQuery (m_db);
         if(batchQuantity > quantityFromThisBatch ){
             //jeśli partia nie zostanie wyczerpana, aktualizuj jej ilość
             updateQuery.prepare("UPDATE PartBatches SET quantity = quantity - :issued WHERE id = :id");
+            updateQuery.bindValue(":issued", quantityFromThisBatch);
         } else {
             //jeśli partia zostanie wyczerpana, usun ją
             updateQuery.prepare("DELETE FROM PartBatches WHERE id = :id");
         }
 
-        updateQuery.bindValue(":issued", quantityFromThisBatch);
         updateQuery.bindValue(":id", batchId);
 
         if(!updateQuery.exec()){
@@ -127,14 +130,29 @@ bool databaseManager::issuePartLIFO(int partId, int quantityToIssue){
     QList<Part> allParts = getAllParts();
     int newTotalQuantity = 0;
     for (const Part &p : allParts){
-        if(p.id() == partId){
+       if(p.id() == partId){
             newTotalQuantity = p.quantity();
             break; // znaleziono częśc, mozna przerwać pętlę
         }
     }
 
-    logQuantityChange(partId,newTotalQuantity, "Wydanie LIFO");
-    return m_db.commit(); //zatwierdz transakcję
+
+    if (m_db.commit()){
+        QString fullDescription = QString ("Wydanie LIFO (%1 szt.):\n%2")
+                                      .arg(quantityToIssue)
+                                      .arg(issueDetails.join("\n"));
+
+        QSqlQuery sumQuery (m_db);
+        sumQuery.prepare("SELECT COALESCE(SUM (quantity), 0) FROM PartBatches WHERE  part_id = :id");
+        sumQuery.bindValue(":id", partId);
+        int newTotalQuantity = 0;
+        if (sumQuery.exec() && sumQuery.next()){
+            newTotalQuantity = sumQuery.value(0).toInt();
+        }
+        logQuantityChange(partId,newTotalQuantity, fullDescription);
+        return true;
+    } else
+        return false;
 }
 
 
@@ -146,7 +164,7 @@ bool databaseManager::issuePartFIFO(int partId, int quantityToIssue){
     }
 
     QSqlQuery query (m_db);
-    query.prepare("SELECT id, quantity FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date ASC");
+    query.prepare("SELECT id, quantity, arrival_date FROM PartBatches WHERE part_id = :part_id AND quantity > 0 ORDER BY arrival_date ASC");
     query.bindValue(":part_id",partId);
 
     //Sprawdzenie czy zapytanie zostało wykonane
@@ -157,22 +175,25 @@ bool databaseManager::issuePartFIFO(int partId, int quantityToIssue){
     }
 
     int remainingToIssue = quantityToIssue;
+    QStringList issueDetails;
 
     while (query.next() && remainingToIssue > 0){
         int batchId = query.value(0).toInt();
         int batchQuantity = query.value(1).toInt();
+        QDateTime arrivalDate = QDateTime::fromString(query.value(2).toString(), Qt::ISODate);
         int quantityFromThisBatch = qMin(remainingToIssue,batchQuantity);
+
+        issueDetails.append(QString(" - %1 szt. (partia z %2)").arg(quantityFromThisBatch).arg(arrivalDate.toString("dd.MM.yyyy HH:mm")));
 
         QSqlQuery updateQuery (m_db);
         if(batchQuantity > quantityFromThisBatch ){
             //jeśli partia nie zostanie wyczerpana, aktualizuj jej ilość
             updateQuery.prepare("UPDATE PartBatches SET quantity = quantity - :issued WHERE id = :id");
+            updateQuery.bindValue(":issued", quantityFromThisBatch);
         } else {
             //jeśli partia zostanie wyczerpana, usun ją
             updateQuery.prepare("DELETE FROM PartBatches WHERE id = :id");
         }
-
-        updateQuery.bindValue(":issued", quantityFromThisBatch);
         updateQuery.bindValue(":id", batchId);
 
         if(!updateQuery.exec()){
@@ -196,10 +217,26 @@ bool databaseManager::issuePartFIFO(int partId, int quantityToIssue){
             newTotalQuantity = p.quantity();
             break; // znaleziono częśc, mozna przerwać pętlę
         }
-    }
+     }
 
-    logQuantityChange(partId,newTotalQuantity, "Wydanie LIFO");
-    return m_db.commit(); //zatwierdz transakcję
+
+    if (m_db.commit()){
+        QString fullDescription = QString ("Wydanie FIFO (%1 szt.):\n%2")
+                                      .arg(quantityToIssue)
+                                      .arg(issueDetails.join("\n"));
+
+        QSqlQuery sumQuery (m_db);
+        sumQuery.prepare("SELECT COALESCE(SUM (quantity), 0) FROM PartBatches WHERE  part_id = :id");
+        sumQuery.bindValue(":id", partId);
+        int newTotalQuantity = 0;
+        if (sumQuery.exec() && sumQuery.next()){
+            newTotalQuantity = sumQuery.value(0).toInt();
+        }
+        logQuantityChange(partId,newTotalQuantity, fullDescription);
+        return true;
+    }
+    m_db.rollback();
+    return false;
 }
 
 QList<Part> databaseManager::getAllParts() const
@@ -271,7 +308,6 @@ void databaseManager::updatePart(const Part &part, const QString &changeDescript
         qDebug() << "Błąd aktualizacji części:" << query.lastError();
     }
 
-    logQuantityChange(part.id(),part.quantity(), changeDescription);
 }
 
 void databaseManager::deletePart(int id)
