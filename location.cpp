@@ -1,10 +1,13 @@
 #include "location.h"
 
-Location::Location() {}
+Location::Location() :
+    m_rack(0), m_shelf (0), m_id(-1)
+{}
 
 Location::Location(const QString &aisle, int rack, int shelf) : m_aisle(aisle),
     m_rack(rack),
-    m_shelf(shelf)
+    m_shelf(shelf),
+    m_id(-1)
 {}
 
 const QString &Location::aisle() const
@@ -20,6 +23,16 @@ int Location::rack() const
 int Location::shelf() const
 {
     return m_shelf;
+}
+
+int Location::id() const
+{
+    return m_id;
+}
+
+void Location::setId(int id)
+{
+    m_id = id;
 }
 
 void Location::setAisle(const QString &aisle)

@@ -71,7 +71,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="quantitySpinBox"/>
+      <widget class="QSpinBox" name="quantitySpinBox">
+       <property name="maximum">
+        <number>999999</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -85,7 +89,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="priceDoubleSpinBox"/>
+      <widget class="QDoubleSpinBox" name="priceDoubleSpinBox">
+       <property name="decimals">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <double>99999.990000000005239</double>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -99,105 +110,9 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>80</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="aisleLabel">
-         <property name="maximumSize">
-          <size>
-           <width>39</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Alejka</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="aisleLineEdit">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>39</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="rackLabel">
-         <property name="text">
-          <string>Regał</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="rackSpinBox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="shelfLabel">
-         <property name="text">
-          <string>Półka</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="shelfSpinBox"/>
+        <widget class="QComboBox" name="locationComboBox"/>
        </item>
       </layout>
      </item>

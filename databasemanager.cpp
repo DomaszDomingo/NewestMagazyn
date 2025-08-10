@@ -90,11 +90,19 @@ QList<Location> databaseManager::getAllLocations() const
 {
     QList<Location> locations;
     QSqlQuery query ("SELECT id, aisle, rack, shelf FROM Locations ORDER BY aisle, rack, shelf",m_db);
+
+    if (!query.exec()){
+        qDebug() << "Błąd pobierania lokalizacji: " << query.lastError();
+        return locations;
+    }
+
     while (query.next()){
         Location loc (query.value("aisle").toString(),
                      query.value("rack").toInt(),
                      query.value("shelf").toInt());
+
         loc.setId(query.value("id").toInt());
+        qDebug() << "[Debug] Załadowano lokalizację:" << loc.toString() << "z ID:" << loc.id();
         locations.append(loc);
     }
     return locations;
@@ -102,14 +110,95 @@ QList<Location> databaseManager::getAllLocations() const
 
 bool databaseManager::deleteLocation(int LocationId)
 {
+    QSqlQuery selectQuery (m_db);
+    selectQuery.prepare("SELECT aisle, rack, shelf FROM Locations Where id = :id");
+    selectQuery.bindValue(":id", LocationId);
+
+    QString aisle;
+    int rack = -1, shelf = -1;
+
+    if (selectQuery.exec() && selectQuery.next()){
+        aisle = selectQuery.value(0).toString();
+        rack = selectQuery.value(1).toInt();
+        shelf = selectQuery.value(2).toInt();
+    } else {
+        qDebug() << "Nie udało się znaleźć lokalizacji o ID:" << LocationId;
+        return false;
+    }
+
+    QSqlQuery checkQuery (m_db);
+    checkQuery.prepare("SELECT COALESCE(SUM(b.quantity), 0) FROM PartBatches b "
+                       "JOIN Parts p ON b.part_id = p.id "
+                       "WHERE p.locationAisle = :aisle AND p.locationRack = :rack AND p.locationShelf = :shelf");
+    checkQuery.bindValue(":aisle", aisle);
+    checkQuery.bindValue(":rack", rack);
+    checkQuery.bindValue(":shelf", shelf);
+
+    if (checkQuery.exec() && checkQuery.next()){
+        int totalQuantityAtLocation = checkQuery.value(0).toInt();
+        if (totalQuantityAtLocation> 0){
+            //Jeśli count > 0, to sa materiały na danym id
+            qDebug() << "Próba usunięcia zajętej lokalizacji" << aisle << rack << shelf;
+            return false;
+        }
+    }
+
+    //Jeśli lokalizacja nie jest zajęta to usuń
+    QSqlQuery deleteQuery (m_db);
+    deleteQuery.prepare("DELETE FROM Locations WHERE id = :id");
+    deleteQuery.bindValue(":id", LocationId);
+
+    if(!deleteQuery.exec()){
+        qDebug() << "Błąd usuwania lokalizacji:" << deleteQuery.lastError();
+        return false;
+    }
+
+    QSqlQuery cleanupQuery (m_db);
+    cleanupQuery.prepare("DELETE FROM Parts WHERE locationAisle =:aisle AND locationRack =:rack AND locationShelf =:shelf");
+    cleanupQuery.bindValue(":aisle", aisle);
+    cleanupQuery.bindValue(":rack", rack);
+    cleanupQuery.bindValue(":shelf", shelf);
+    cleanupQuery.exec();
+
+
+    return true;
+
+
+
+}
+
+bool databaseManager::updateLocation(const Location &location)
+{
     QSqlQuery query (m_db);
-    query.prepare("DELETE FROM Locations WHERE id = :id");
-    query.bindValue(":id", LocationId);
+    query.prepare("UPDATE Locations SET aisle = : aisle, rack = : rack, shelf = : shelf WHERE id = : id");
+    query.bindValue(":aisle", location.aisle());
+    query.bindValue(":rack", location.rack());
+    query.bindValue(":shelf", location.shelf());
+    query.bindValue(":id", location.id());
+
     if (!query.exec()){
-        qDebug() << "Błąd usuwania lokalizacji:" << query.lastError();
+        qDebug()  << "Błąd aktualizacji lokalizacji: " << query.lastError();
         return false;
     }
     return true;
+}
+
+QStringList databaseManager::getPartNamesAtLocation(const Location &location) const
+{
+    QStringList partNames;
+    QSqlQuery query(m_db);
+    query.prepare("SELECT name FROM Parts WHERE locationAisle = :aisle "
+                  "AND locationRack = :rack AND locationShelf = :shelf");
+    query.bindValue(":aisle", location.aisle());
+    query.bindValue(":rack", location.rack());
+    query.bindValue(":shelf", location.shelf());
+
+    if (query.exec()) {
+        while (query.next()) {
+            partNames.append(query.value(0).toString());
+        }
+    }
+    return partNames;
 }
 
 
@@ -524,7 +613,7 @@ void databaseManager::createTables()
                                    "UNIQUE (aisle, rack, shelf)" // zapobiega duplikatom
                                    ");";
 
-    if (!query.exec(createBatchesQuery)){
+    if (!query.exec(createLocationsQuery)){
         qDebug() << "Błąd tworzenia tabeli locations:" << query.lastError();
     }
 }

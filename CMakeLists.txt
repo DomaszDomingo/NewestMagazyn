@@ -31,6 +31,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         editpartdialog.h editpartdialog.cpp editpartdialog.ui
         issuepartdialog.h issuepartdialog.cpp issuepartdialog.ui
         historydialog.h historydialog.cpp historydialog.ui
+        locationmanager.h locationmanager.cpp
+        addlocationdialog.h addlocationdialog.cpp addlocationdialog.ui
+
 
     )
 # Define target properties for Android with Qt 6 as:

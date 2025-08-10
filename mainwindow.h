@@ -11,6 +11,9 @@
 #include <QtCharts/QValueAxis>
 #include <QItemSelection>
 #include "historydialog.h"
+#include "locationmanager.h"
+
+
 //QT_CHARTS_USE_NAMESPACE
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +37,7 @@ private:
     databaseManager m_dbManager;
     QChart *m_chart;
     QLineSeries *m_series;
+    LocationManager *m_locationManager;
 
 
 private slots:
@@ -43,6 +47,9 @@ private slots:
     void onPartSelectionChanged(const QItemSelection & selected, const QItemSelection &deselected);
     void on_issueButton_clicked();
     void on_historyButton_clicked();
+    void on_addLocationButton_clicked();
+    void on_editLocationButton_clicked();
+    void on_deleteLocationButton_clicked();
 
 };
 #endif // MAINWINDOW_H

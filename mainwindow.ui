@@ -172,7 +172,7 @@
      <attribute name="title">
       <string>Lokalizacje</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -191,6 +191,13 @@
           <widget class="QPushButton" name="addLocationButton">
            <property name="text">
             <string>Dodaj</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string>Edytuj</string>
            </property>
           </widget>
          </item>

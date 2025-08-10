@@ -358,6 +358,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_addlocationdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.h",
 			"MU",
 			"EWIEGA46WW/moc_addpartdialog.cpp",
@@ -391,6 +397,12 @@
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.h",
+			"MU",
+			"EWIEGA46WW/moc_locationmanager.cpp",
 			null
 		],
 		[
@@ -491,6 +503,11 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.cpp",
 			"MU",
 			null
@@ -517,6 +534,11 @@
 		],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.cpp",
 			"MU",
 			null
 		],

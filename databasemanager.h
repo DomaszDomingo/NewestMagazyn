@@ -24,6 +24,8 @@ public:
     bool addLocation (const Location & location);
     QList<Location> getAllLocations() const;
     bool deleteLocation (int LocationId);
+    bool updateLocation (const Location & location);
+    QStringList getPartNamesAtLocation(const Location &location) const;
 
     bool issuePartLIFO(int partId, int quantityToIssue);        //wydawanie LIFO
     bool issuePartFIFO(int partId, int quantityToIssue);        //wydawanie FIFO

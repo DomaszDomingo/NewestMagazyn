@@ -16,7 +16,9 @@ public:
     int rack () const;
     int shelf () const;
 
+    int id () const;
     void setId (int id);
+
     void setAisle (const QString &aisle);
     void setRack (int rack);
     void setShelf (int shelf);
@@ -28,7 +30,7 @@ private:
     QString m_aisle;
     int m_rack;
     int m_shelf;
-    int m_id;
+    int m_id = -1;
 
 };
 

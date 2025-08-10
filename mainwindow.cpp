@@ -4,6 +4,7 @@
 #include "addpartdialog.h"
 #include "editpartdialog.h"
 #include "issuepartdialog.h"
+#include "addlocationdialog.h"
 
 MainWindow::MainWindow (QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +18,11 @@ MainWindow::MainWindow (QWidget *parent)
     ui->partsTableView->setModel(m_warehouseManager);
     ui->partsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->partsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    m_locationManager = new LocationManager (m_dbManager, this);
+    ui->locationsTableView->setModel(m_locationManager);
+    ui->locationsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->locationsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     m_chart = new QChart();
     m_series = new QLineSeries();
@@ -52,7 +58,15 @@ MainWindow::~MainWindow(){
 
 void MainWindow::on_addButton_clicked()
 {
-    addPartDialog dialog (this);
+    //pobranie wszystkich lokalizacji z db
+    QList<Location> locations = m_dbManager.getAllLocations();
+    if (locations.isEmpty()){
+        QMessageBox::warning(this,"Brak lokalizacji", "Najpierw zdefiniuj conajmniej jedną lokalizację");
+        return;
+    }
+
+    //przekazanie lokalizadji do konstruktora okna dialogowego
+    addPartDialog dialog (locations, this);
     if (dialog.exec() != QDialog::Accepted){
         return; // użytkownik anulował
     }
@@ -222,6 +236,74 @@ void MainWindow::on_historyButton_clicked()
 
     HistoryDialog dialog (selectedPart.name(),history,this);
     dialog.exec();
+
+}
+
+void MainWindow::on_addLocationButton_clicked()
+{
+    AddLocationDialog dialog (this);
+    if (dialog.exec() == QDialog::Accepted){
+        Location newLocation = dialog.getLocationData();
+        if(m_dbManager.addLocation(newLocation)){
+            m_locationManager->refreshData();
+        } else {
+            QMessageBox::warning(this, "Błąd", "Nie udało się dodać lokalizacji. Sprawdź, czy taka lokalizacja już nie istnieje");
+
+        }
+    }
+}
+
+void MainWindow::on_editLocationButton_clicked()
+{
+    const QModelIndex currentIndex = ui->locationsTableView->selectionModel()->currentIndex();
+    if(!currentIndex.isValid()){
+        QMessageBox::warning(this, "Brak zaznaczenia" , "Proszę zaznaczyć lokalizację do edycji");
+        return;
+    }
+
+    Location locationToEdit = m_locationManager->getLocationAtIndex(currentIndex);
+
+    AddLocationDialog dialog (locationToEdit, this);
+    if(dialog.exec() == QDialog::Accepted){
+        Location updatedLocation = dialog.getLocationData();
+        if(m_dbManager.updateLocation(updatedLocation)){
+            m_locationManager->refreshData();
+        } else {
+            QMessageBox::warning(this, "Błąd", "Nie udało się zaktualizować lokalizacji.");
+        }
+    }
+}
+
+void MainWindow::on_deleteLocationButton_clicked()
+{
+    const QModelIndex currentIndex = ui->locationsTableView->selectionModel()->currentIndex();
+
+    if(!currentIndex.isValid()){
+        QMessageBox::warning(this,"Brak zaznaczenia","Proszę najpierw zaznaczyć element do usunięcia");
+        return;
+    }
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Potwierdzenie usunięcia",
+                                  "Czy na pewno usunąć wybraną lokalizację?",
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes){
+        //Pobierz pełny obiekt lokalizacji z modelu
+        Location locationToDelete = m_locationManager->getLocationAtIndex(currentIndex);
+
+        if(m_dbManager.deleteLocation(locationToDelete.id())){
+                //jeśli usunięcie się powiodło, odświez  widok tabeli
+            m_locationManager->refreshData();
+            QMessageBox::information(this, "Sukces", "Lokalizacja została usunięta.");
+        } else {
+            QStringList blockingParts = m_dbManager.getPartNamesAtLocation(locationToDelete);
+            QString blockingPartsString = blockingParts.join(", ");
+            QMessageBox::warning(this, "Operacja nieudana",
+                                 "Nie można usunąć lokalizacji, ponieważ jest ona w użyciu. "
+                                 "Upewnij się, że żaden materiał nie jest do niej przypisany.");
+        }
+    }
 
 }
 

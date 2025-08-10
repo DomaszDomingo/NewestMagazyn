@@ -710,6 +710,8 @@ Magazyn_autogen/timestamp: \
 	C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
 	C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/CMakeLists.txt \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/.qtc/package-manager/auto-setup.cmake \
@@ -727,6 +729,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/main.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h \
@@ -734,6 +738,7 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.ui \

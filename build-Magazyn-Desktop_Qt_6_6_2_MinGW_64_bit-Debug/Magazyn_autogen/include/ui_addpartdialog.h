@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QDoubleSpinBox>
@@ -43,18 +44,8 @@ public:
     QDoubleSpinBox *priceDoubleSpinBox;
     QHBoxLayout *horizontalLayout;
     QLabel *locationLabel;
-    QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout_3;
-    QLabel *aisleLabel;
-    QLineEdit *aisleLineEdit;
-    QSpacerItem *horizontalSpacer_2;
-    QVBoxLayout *verticalLayout_2;
-    QLabel *rackLabel;
-    QSpinBox *rackSpinBox;
-    QSpacerItem *horizontalSpacer_3;
-    QVBoxLayout *verticalLayout;
-    QLabel *shelfLabel;
-    QSpinBox *shelfSpinBox;
+    QComboBox *locationComboBox;
     QSpacerItem *verticalSpacer;
     QDialogButtonBox *buttonBox;
 
@@ -115,6 +106,7 @@ public:
 
         quantitySpinBox = new QSpinBox(addPartDialog);
         quantitySpinBox->setObjectName("quantitySpinBox");
+        quantitySpinBox->setMaximum(999999);
 
         horizontalLayout_5->addWidget(quantitySpinBox);
 
@@ -130,6 +122,8 @@ public:
 
         priceDoubleSpinBox = new QDoubleSpinBox(addPartDialog);
         priceDoubleSpinBox->setObjectName("priceDoubleSpinBox");
+        priceDoubleSpinBox->setDecimals(2);
+        priceDoubleSpinBox->setMaximum(99999.990000000005239);
 
         horizontalLayout_6->addWidget(priceDoubleSpinBox);
 
@@ -143,66 +137,15 @@ public:
 
         horizontalLayout->addWidget(locationLabel);
 
-        horizontalSpacer = new QSpacerItem(80, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
-
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName("verticalLayout_3");
-        aisleLabel = new QLabel(addPartDialog);
-        aisleLabel->setObjectName("aisleLabel");
-        aisleLabel->setMaximumSize(QSize(39, 25));
+        locationComboBox = new QComboBox(addPartDialog);
+        locationComboBox->setObjectName("locationComboBox");
 
-        verticalLayout_3->addWidget(aisleLabel);
-
-        aisleLineEdit = new QLineEdit(addPartDialog);
-        aisleLineEdit->setObjectName("aisleLineEdit");
-        aisleLineEdit->setEnabled(true);
-        aisleLineEdit->setMaximumSize(QSize(39, 25));
-        aisleLineEdit->setBaseSize(QSize(0, 0));
-
-        verticalLayout_3->addWidget(aisleLineEdit);
+        verticalLayout_3->addWidget(locationComboBox);
 
 
         horizontalLayout->addLayout(verticalLayout_3);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_2);
-
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName("verticalLayout_2");
-        rackLabel = new QLabel(addPartDialog);
-        rackLabel->setObjectName("rackLabel");
-
-        verticalLayout_2->addWidget(rackLabel);
-
-        rackSpinBox = new QSpinBox(addPartDialog);
-        rackSpinBox->setObjectName("rackSpinBox");
-
-        verticalLayout_2->addWidget(rackSpinBox);
-
-
-        horizontalLayout->addLayout(verticalLayout_2);
-
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_3);
-
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName("verticalLayout");
-        shelfLabel = new QLabel(addPartDialog);
-        shelfLabel->setObjectName("shelfLabel");
-
-        verticalLayout->addWidget(shelfLabel);
-
-        shelfSpinBox = new QSpinBox(addPartDialog);
-        shelfSpinBox->setObjectName("shelfSpinBox");
-
-        verticalLayout->addWidget(shelfSpinBox);
-
-
-        horizontalLayout->addLayout(verticalLayout);
 
 
         verticalLayout_4->addLayout(horizontalLayout);
@@ -235,9 +178,6 @@ public:
         quantityLabel->setText(QCoreApplication::translate("addPartDialog", "Ilo\305\233\304\207:", nullptr));
         priceLabel->setText(QCoreApplication::translate("addPartDialog", "Cena:", nullptr));
         locationLabel->setText(QCoreApplication::translate("addPartDialog", "Lokalizacja: ", nullptr));
-        aisleLabel->setText(QCoreApplication::translate("addPartDialog", "Alejka", nullptr));
-        rackLabel->setText(QCoreApplication::translate("addPartDialog", "Rega\305\202", nullptr));
-        shelfLabel->setText(QCoreApplication::translate("addPartDialog", "P\303\263\305\202ka", nullptr));
     } // retranslateUi
 
 };
