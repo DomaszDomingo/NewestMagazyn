@@ -738,8 +738,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
-	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.cpp \
-	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \

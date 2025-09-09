@@ -12,7 +12,7 @@
 #include <QItemSelection>
 #include "historydialog.h"
 #include "locationmanager.h"
-#include "recievepartoperation.h"
+#include "receivepartoperation.h"
 #include "issuepartoperation.h"
 #include "updatepartinfooperation.h"
 #include <memory>

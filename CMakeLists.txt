@@ -34,7 +34,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         locationmanager.h locationmanager.cpp
         addlocationdialog.h addlocationdialog.cpp addlocationdialog.ui
         warehouseoperation.h warehouseoperation.cpp
-        recievepartoperation.h recievepartoperation.cpp
+        receivepartoperation.h receivepartoperation.cpp
         issuepartoperation.h issuepartoperation.cpp
         updatepartinfooperation.h updatepartinfooperation.cpp
 

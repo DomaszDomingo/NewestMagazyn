@@ -1526,7 +1526,7 @@ C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h
- mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.h
+ mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h
  mdp:C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.h
@@ -3039,3 +3039,5 @@ C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.cpp
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.h
 C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.cpp
+C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.h
+C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.cpp

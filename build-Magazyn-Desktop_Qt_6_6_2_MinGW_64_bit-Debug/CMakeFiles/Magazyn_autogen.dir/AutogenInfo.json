@@ -424,9 +424,9 @@
 			null
 		],
 		[
-			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.h",
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.h",
 			"MU",
-			"EWIEGA46WW/moc_recievepartoperation.cpp",
+			"EWIEGA46WW/moc_receivepartoperation.cpp",
 			null
 		],
 		[
@@ -579,7 +579,7 @@
 		],
 		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ],
 		[
-			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.cpp",
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivepartoperation.cpp",
 			"MU",
 			null
 		],
