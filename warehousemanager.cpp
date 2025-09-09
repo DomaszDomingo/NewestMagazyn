@@ -65,6 +65,16 @@ QList<Part> WarehouseManager::getAllParts() const
     return m_parts;
 }
 
+Part WarehouseManager::getPartById(int id) const
+{
+    for (const Part &p : m_parts) {
+        if (p.id() == id) {
+            return p;
+        }
+    }
+    return Part(); // Zwróć pusty obiekt, jeśli nie znaleziono
+}
+
 int WarehouseManager::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())

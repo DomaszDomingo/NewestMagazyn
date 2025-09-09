@@ -5,6 +5,10 @@
 #include "editpartdialog.h"
 #include "issuepartdialog.h"
 #include "addlocationdialog.h"
+#include "receivestockoperation.h"
+#include "issuestockoperation.h"
+#include <memory>
+
 
 MainWindow::MainWindow (QWidget *parent)
     : QMainWindow(parent)
@@ -58,30 +62,25 @@ MainWindow::~MainWindow(){
 
 void MainWindow::on_addButton_clicked()
 {
-    //pobranie wszystkich lokalizacji z db
-    QList<Location> locations = m_dbManager.getAllLocations();
-    if (locations.isEmpty()){
-        QMessageBox::warning(this,"Brak lokalizacji", "Najpierw zdefiniuj conajmniej jedną lokalizację");
-        return;
+
+    addPartDialog dialog(m_dbManager.getAllLocations(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        Part partData = dialog.getPartData();
+
+
+        auto operation = std::make_shared<ReceiveStockOperation>(partData);
+
+
+        if (operation->execute(m_dbManager)) {
+            QMessageBox::information(this, "Sukces", "Nowy materiał został dodany.");
+
+            m_warehouseManager->refreshData();
+
+        } else {
+            QMessageBox::warning(this, "Błąd", "Nie udało się dodać materiału.");
+        }
+
     }
-
-    //przekazanie lokalizadji do konstruktora okna dialogowego
-    addPartDialog dialog (locations, this);
-    if (dialog.exec() != QDialog::Accepted){
-        return; // użytkownik anulował
-    }
-    Part partFromDialog = dialog.getPartData();
-
-    //sprawdz czy główny rekord dla tej czesci juz istnieje
-    //jeśli nie, stworz go i pobierz jego id. Jeśli tak pobierz jego id
-    int partId = m_dbManager.getOrCreatePart(partFromDialog);
-
-    //dodaj nową partię do tabeli PartBatches używając ID
-
-    m_dbManager.addBatch(partId, partFromDialog.quantity(),partFromDialog.price());
-
-
-    m_warehouseManager->refreshData();
 }
 
 void MainWindow::on_editButton_clicked()
@@ -173,45 +172,49 @@ void MainWindow::onPartSelectionChanged(const QItemSelection &selected, const QI
 
 void MainWindow::on_issueButton_clicked()
 {
-
-    //Pobierz wszystkie części z modelu
     QList<Part> allParts = m_warehouseManager->getAllParts();
-    if(allParts.isEmpty()){
-        QMessageBox::information(this, "Brak mageriałów", "Magazyn jest pusty.");
+    if (allParts.isEmpty()) {
+        QMessageBox::information(this, "Brak materiałów", "Magazyn jest pusty.");
         return;
     }
 
-    //Otwarcie okna dialogowego i przekazanie listy części
-    IssuePartDialog dialog (allParts, this);
-    if(dialog.exec() != QDialog::Accepted){
-        return; //anulowano
+    // 1. Otwórz dialog, aby zapytać o część i ilość (bez strategii)
+    IssuePartDialog dialog(allParts, this);
+    if (dialog.exec() != QDialog::Accepted) {
+        return; // Anulowano
     }
 
-    //Pobranie z dialogu (ID Cześci i ilość)
     auto issueDataOpt = dialog.getIssueData();
-    if (!issueDataOpt.has_value()){
-        return; // nie udało się pobrać danych
+    if (issueDataOpt.has_value()) {
+        const auto& issueData = issueDataOpt.value();
+        Part partToIssue = m_warehouseManager->getPartById(issueData.partId);
+
+        // 2. Odczytaj strategię z ComboBox w głównym oknie
+        IssueStockOperation::IssueStrategy strategy;
+        QString selectedMode = ui->issueModeComboBox->currentText();
+
+        if (selectedMode == "LIFO") {
+            strategy = IssueStockOperation::IssueStrategy::LIFO;
+        } else { // Domyślnie lub gdy wybrano "FIFO"
+            strategy = IssueStockOperation::IssueStrategy::FIFO;
+        }
+
+        // 3. Stwórz obiekt operacji z poprawną strategią
+        auto operation = std::make_shared<IssueStockOperation>(
+            partToIssue,
+            issueData.quantity,
+            partToIssue.name(),
+            strategy // <-- Używamy strategii z ui->issueModeComboBox!
+            );
+
+        // 4. Wykonaj operację
+        if (operation->execute(m_dbManager)) {
+            QMessageBox::information(this, "Sukces", "Wydano towar z magazynu.");
+            m_warehouseManager->refreshData();
+        } else {
+            QMessageBox::warning(this, "Błąd", "Wydanie materiału nie powiodło się. Sprawdź, czy na stanie jest wystarczająca ilość.");
+        }
     }
-
-    IssueData data = *issueDataOpt;
-
-    QString mode = ui->issueModeComboBox->currentText();
-    bool success = false;
-
-    if(mode == "FIFO"){
-        success = m_dbManager.issuePartFIFO(data.partId, data.quantity);
-    } else { // LIFO
-        success = m_dbManager.issuePartLIFO(data.partId, data.quantity);
-    }
-
-    if (success) {
-        QMessageBox::information(this, "Sukces", "Materiał został pomyślnie wydany.");
-    } else {
-        QMessageBox::warning(this, "Błąd", "Wydanie materiału nie powiodło się. Sprawdź, czy na stanie jest wystarczająca ilość.");
-    }
-
-    m_warehouseManager->refreshData();
-
 }
 
 void MainWindow::on_historyButton_clicked()

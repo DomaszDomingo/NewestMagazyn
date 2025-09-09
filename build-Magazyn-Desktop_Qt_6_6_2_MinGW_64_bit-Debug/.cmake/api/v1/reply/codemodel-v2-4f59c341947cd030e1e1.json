@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-65dfefd7c0e6f013c423.json",
+					"jsonFile" : "directory-.-Debug-5d775d6dd6290c2be91f.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Magazyn::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Magazyn-Debug-766ab9542aedd67cd3c8.json",
+					"jsonFile" : "target-Magazyn-Debug-a3eb38889842bebb1fd3.json",
 					"name" : "Magazyn",
 					"projectIndex" : 0
 				},

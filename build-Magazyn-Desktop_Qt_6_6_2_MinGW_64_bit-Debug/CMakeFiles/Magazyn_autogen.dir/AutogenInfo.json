@@ -394,6 +394,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuestockoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_issuestockoperation.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
@@ -418,9 +424,21 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_receivestockoperation.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h",
 			"MU",
 			"EWIEGA46WW/moc_warehousemanager.cpp",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_warehouseoperation.cpp",
 			null
 		]
 	],
@@ -533,6 +551,11 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuestockoperation.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp",
 			"MU",
 			null
@@ -550,7 +573,17 @@
 		],
 		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.cpp",
 			"MU",
 			null
 		]

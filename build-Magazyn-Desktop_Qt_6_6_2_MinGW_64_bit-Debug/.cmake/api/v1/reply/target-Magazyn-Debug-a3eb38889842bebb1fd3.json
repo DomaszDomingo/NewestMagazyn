@@ -82,13 +82,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 73,
+				"line" : 77,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 56,
+				"line" : 60,
 				"parent" : 0
 			},
 			{
@@ -522,7 +522,11 @@
 				17,
 				20,
 				23,
-				26
+				26,
+				28,
+				31,
+				33,
+				35
 			]
 		}
 	],
@@ -679,7 +683,11 @@
 				17,
 				20,
 				23,
-				26
+				26,
+				28,
+				31,
+				33,
+				35
 			]
 		},
 		{
@@ -697,10 +705,15 @@
 				22,
 				25,
 				27,
-				28,
-				29,
 				30,
-				31
+				32,
+				34,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41
 			]
 		},
 		{
@@ -712,14 +725,15 @@
 				18,
 				21,
 				24,
-				32
+				29,
+				42
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				33
+				43
 			]
 		}
 	],
@@ -874,6 +888,55 @@
 			"sourceGroupIndex" : 0
 		},
 		{
+			"backtrace" : 4,
+			"path" : "addlocationdialog.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "addlocationdialog.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "addlocationdialog.ui",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"path" : "warehouseoperation.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "warehouseoperation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "receivestockoperation.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "receivestockoperation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "issuestockoperation.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "issuestockoperation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/include/ui_mainwindow.h",
@@ -901,6 +964,12 @@
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/include/ui_historydialog.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build-Magazyn-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Magazyn_autogen/include/ui_addlocationdialog.h",
 			"sourceGroupIndex" : 1
 		},
 		{
