@@ -394,6 +394,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_issuepartoperation.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h",
 			"MU",
 			"EWIEGA46WW/moc_location.cpp",
@@ -418,9 +424,27 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_recievepartoperation.cpp",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.h",
+			"MU",
+			"EWIEGA46WW/moc_updatepartinfooperation.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h",
 			"MU",
 			"EWIEGA46WW/moc_warehousemanager.cpp",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_warehouseoperation.cpp",
 			null
 		]
 	],
@@ -533,6 +557,11 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp",
 			"MU",
 			null
@@ -550,7 +579,22 @@
 		],
 		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.cpp",
 			"MU",
 			null
 		]

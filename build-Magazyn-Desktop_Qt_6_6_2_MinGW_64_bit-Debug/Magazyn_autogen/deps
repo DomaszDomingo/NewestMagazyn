@@ -727,6 +727,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartoperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/location.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/locationmanager.cpp \
@@ -736,8 +738,14 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/mainwindow.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/recievepartoperation.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/updatepartinfooperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addlocationdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/addpartdialog.ui \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.ui \
