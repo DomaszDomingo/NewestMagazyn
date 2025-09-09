@@ -29,10 +29,8 @@ public:
     std::optional <IssueData> getIssueData() const;
 
 private slots:
-
     //Aktualizacja UI po wybraniu części z listy
     void onPartSelected(int index);
-
 private:
     Ui::IssuePartDialog *ui;
     QList <Part> m_parts; //Przechowuje listę części
