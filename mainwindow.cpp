@@ -67,9 +67,9 @@ void MainWindow::on_addButton_clicked()
     if (dialog.exec() == QDialog::Accepted) {
         Part partData = dialog.getPartData();
 
+        WarehouseOperation* operation = nullptr;                                                        //klasyczny mechanizm polimofrizmu.
 
-        auto operation = std::make_shared<ReceiveStockOperation>(partData);
-
+        operation = new ReceiveStockOperation(partData);
 
         if (operation->execute(m_dbManager)) {
             QMessageBox::information(this, "Sukces", "Nowy materiał został dodany.");
@@ -79,6 +79,8 @@ void MainWindow::on_addButton_clicked()
         } else {
             QMessageBox::warning(this, "Błąd", "Nie udało się dodać materiału.");
         }
+
+        delete operation;
 
     }
 }
@@ -199,16 +201,20 @@ void MainWindow::on_issueButton_clicked()
             strategy = IssueStockOperation::IssueStrategy::FIFO;
         }
 
-        // 3. Stwórz obiekt operacji z poprawną strategią
-        auto operation = std::make_shared<IssueStockOperation>(
+
+        auto operation = std::make_shared<IssueStockOperation>(                                     //pod operation alokowany jest inteligentny wskaźnik
+                                                                                                    //make_shared przygotowało ten wskaźnik z IssueStockOperation
+                                                                                                    //dzięki temu ze jest zastosowane auto to operation ma typ
+                                                                                                    //std::shared_ptr<IssueStockOperation>
             partToIssue,
             issueData.quantity,
             partToIssue.name(),
-            strategy // <-- Używamy strategii z ui->issueModeComboBox!
+            strategy
             );
 
-        // 4. Wykonaj operację
-        if (operation->execute(m_dbManager)) {
+
+        if (operation->execute(m_dbManager)) {                                                      //operation wykorzystuje metodę execute, która jest metodą wirtualną
+                                                                                                    //w klasie bazowej WarehouseOperation
             QMessageBox::information(this, "Sukces", "Wydano towar z magazynu.");
             m_warehouseManager->refreshData();
         } else {
