@@ -382,6 +382,12 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_editpartoperation.cpp",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.h",
 			"MU",
 			"EWIEGA46WW/moc_historydialog.cpp",
@@ -427,6 +433,12 @@
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.h",
 			"MU",
 			"EWIEGA46WW/moc_receivestockoperation.cpp",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/showhistoryoperation.h",
+			"MU",
+			"EWIEGA46WW/moc_showhistoryoperation.cpp",
 			null
 		],
 		[
@@ -541,6 +553,11 @@
 			null
 		],
 		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartoperation.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.cpp",
 			"MU",
 			null
@@ -574,6 +591,11 @@
 		[ "C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.cpp", "MU", null ],
 		[
 			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/showhistoryoperation.cpp",
 			"MU",
 			null
 		],

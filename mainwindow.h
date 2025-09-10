@@ -12,6 +12,7 @@
 #include <QItemSelection>
 #include "historydialog.h"
 #include "locationmanager.h"
+#include "editpartoperation.h"
 
 
 //QT_CHARTS_USE_NAMESPACE

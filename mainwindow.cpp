@@ -8,6 +8,7 @@
 #include "receivestockoperation.h"
 #include "issuestockoperation.h"
 #include <memory>
+#include "showhistoryoperation.h"
 
 
 MainWindow::MainWindow (QWidget *parent)
@@ -87,24 +88,34 @@ void MainWindow::on_addButton_clicked()
 
 void MainWindow::on_editButton_clicked()
 {
-    const QModelIndex currentIndex = ui->partsTableView->selectionModel()->currentIndex();
 
-    if (!currentIndex.isValid()){
-        QMessageBox::warning(this, "Brak zaznaczenia" , "Proszę najpierw zaznaczyć część do edycji.");
+    QModelIndex currentIndex = ui->partsTableView->selectionModel()->currentIndex();
+    if (!currentIndex.isValid()) {
+        QMessageBox::warning(this, "Brak zaznaczenia", "Proszę najpierw zaznaczyć element do edycji.");
         return;
     }
 
     Part partToEdit = m_warehouseManager->getPartAtIndex(currentIndex);
 
-    EditPartDialog dialog (partToEdit,this);
 
-    if(dialog.exec() == QDialog::Accepted){
-        //Pobierz zaktualizowane dane
+    EditPartDialog dialog(partToEdit, this);
+    if (dialog.exec() == QDialog::Accepted) {
         Part updatedPart = dialog.getPartData();
-        // zleć aktualizację modelu
-        m_warehouseManager->updatePart(updatedPart);
-        //zleć aktualizację w bazie danych
-        m_dbManager.updatePart(updatedPart, "Edycja danych części");
+
+
+        auto operation = std::make_shared<EditPartOperation>(updatedPart);
+
+
+        if (operation->execute(m_dbManager)) {
+            QMessageBox::information(this, "Sukces", "Dane części zostały zaktualizowane.");
+
+            m_warehouseManager->refreshData();
+
+        } else {
+
+            QMessageBox::warning(this, "Błąd", "Nie udało się zaktualizować danych części.");
+        }
+
     }
 }
 
@@ -227,24 +238,18 @@ void MainWindow::on_historyButton_clicked()
 {
 //Sprawdzenie czy coś jest zaznaczone
     const QModelIndex currentIndex = ui->partsTableView->selectionModel()->currentIndex();
-
     if (!currentIndex.isValid()){
         QMessageBox::warning(this, "Brak zaznaczenia" , "Proszę najpierw zaznaczyć część, aby zobaczyc historię." );
         return;
     }
     Part selectedPart = m_warehouseManager->getPartAtIndex(currentIndex);
     //Pobranie szegółowej historii z bazy danych
-    QList<HistoryEntry> history = m_dbManager.getDetailedHistoryForPart(selectedPart.id());
 
-    if (history.isEmpty()){
-        QMessageBox::information(this, "Brak historii" , "Brak zapisanej historii dla tej części.");
-        return;
+    auto operation = std::make_shared<ShowHistoryOperation>(selectedPart, this);
+    if(!operation -> execute(m_dbManager)){
+        QMessageBox::information(this, "Brak Historii", "Brak zapisanej historii dla wybranego materiału.");
     }
-
-    //UtwóRz i wyświetl okno dialogowe
-
-    HistoryDialog dialog (selectedPart.name(),history,this);
-    dialog.exec();
+    QList<HistoryEntry> history = m_dbManager.getDetailedHistoryForPart(selectedPart.id());
 
 }
 

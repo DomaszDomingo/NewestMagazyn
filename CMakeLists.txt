@@ -36,6 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         warehouseoperation.h warehouseoperation.cpp
         receivestockoperation.h receivestockoperation.cpp
         issuestockoperation.h issuestockoperation.cpp
+        editpartoperation.h editpartoperation.cpp
+        showhistoryoperation.h showhistoryoperation.cpp
 
 
     )

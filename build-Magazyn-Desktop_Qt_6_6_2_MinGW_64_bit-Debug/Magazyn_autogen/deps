@@ -723,6 +723,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/databasemanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartdialog.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/editpartoperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/historydialog.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/issuepartdialog.cpp \
@@ -740,6 +742,8 @@ Magazyn_autogen/timestamp: \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/part.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/receivestockoperation.h \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/showhistoryoperation.cpp \
+	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/showhistoryoperation.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.cpp \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehousemanager.h \
 	C:/Users/DomoVM/Documents/GitHub/NewestMagazyn/warehouseoperation.cpp \
