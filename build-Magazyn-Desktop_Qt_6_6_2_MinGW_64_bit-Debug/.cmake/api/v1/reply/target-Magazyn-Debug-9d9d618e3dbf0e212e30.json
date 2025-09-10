@@ -533,11 +533,11 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "Magazyn_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 0,
 			"id" : "Magazyn_autogen::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Magazyn_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "Magazyn::@6890427a1f51a3e7e1df",
